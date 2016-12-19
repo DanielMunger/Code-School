@@ -8,7 +8,7 @@ namespace Modules
   {
     public HomeModule()
     {
-      // Routes for Landing Page
+      // Routes for Landing Page Navbar
       Get["/"] = _ => {
         return View["index.cshtml"];
       };
