@@ -5,38 +5,45 @@ using Kickstart;
 
 namespace Kickstart
 {
-  public class Course
+  public class Grade
   {
     private int _id;
-    private string _name;
+    private string _attendance;
+    private string _grade;
 
-    public Course(string name, int id = 0)
+    public Grade(string attendance, string grade, int id = 0)
     {
       _id = id;
-      _name = name;
+      _attendance = attendance;
+      _grade = grade;
     }
-    public override bool Equals(System.Object otherCourse)
+    public override bool Equals(System.Object otherGrade)
     {
 
-      if (!(otherCourse is Course))
+      if (!(otherGrade is Grade))
       {
         return false;
       }
       else
       {
-        Course newCourse = (Course) otherCourse;
-        bool idEquality = (this.GetId() == newCourse.GetId());
-        bool nameEquality = (this.GetName() == newCourse.GetName());
-        return (idEquality && nameEquality);
+        Grade newGrade = (Grade) otherGrade;
+        bool idEquality = (this.GetId() == newGrade.GetId());
+        bool attendanceEquality = (this.GetAttendance() == newGrade.GetAttendance());
+        bool gradeEquality = (this.GetGrade() == newGrade.GetGrade());
+        return (idEquality && attendanceEquality && gradeEquality);
       }
     }
     public int GetId()
     {
       return _id;
     }
-    public string GetName()
+    public string GetAttendance()
     {
-      return _name;
+      return _attendance;
+    }
+    public string GetGrade()
+    {
+      return _grade;
     }
 
     public void Save()
@@ -44,9 +51,10 @@ namespace Kickstart
       SqlConnection conn = DB.Connection();
       conn.Open();
 
-      SqlCommand cmd = new SqlCommand("INSERT INTO courses (course_name) OUTPUT INSERTED.id VALUES (@CourseName);", conn);
+      SqlCommand cmd = new SqlCommand("INSERT INTO grades (attendance, grade) OUTPUT INSERTED.id VALUES (@Attendance, @Grade);", conn);
 
-      cmd.Parameters.AddWithValue("@CourseName", this.GetName());
+      cmd.Parameters.AddWithValue("@Attendance", this.GetAttendance());
+      cmd.Parameters.AddWithValue("@Grade", this.GetGrade());
       SqlDataReader rdr = cmd.ExecuteReader();
 
       while(rdr.Read())
@@ -63,23 +71,24 @@ namespace Kickstart
       }
     }
 
-    public static List<Course> GetAll()
+    public static List<Grade> GetAll()
     {
-      List<Course> allCourses = new List<Course>{};
+      List<Grade> allGrades = new List<Grade>{};
 
       SqlConnection conn = DB.Connection();
       conn.Open();
 
-      SqlCommand cmd = new SqlCommand("SELECT * FROM courses;", conn);
+      SqlCommand cmd = new SqlCommand("SELECT * FROM grades;", conn);
       SqlDataReader rdr = cmd.ExecuteReader();
 
       while(rdr.Read())
       {
-        int courseId = rdr.GetInt32(0);
-        string name = rdr.GetString(1);
+        int trackId = rdr.GetInt32(0);
+        string attendance = rdr.GetString(1);
+        string grade = rdr.GetString(2);
 
-        Course newCourse = new Course(name, courseId);
-        allCourses.Add(newCourse);
+        Grade newGrade = new Grade(attendance, grade, trackId);
+        allGrades.Add(newGrade);
       }
       if(rdr != null)
       {
@@ -89,27 +98,29 @@ namespace Kickstart
       {
         conn.Close();
       }
-      return allCourses;
+      return allGrades;
     }
 
-    public static Course Find(int id)
+    public static Grade Find(int id)
     {
       SqlConnection conn = DB.Connection();
       conn.Open();
 
-      SqlCommand cmd = new SqlCommand("SELECT * FROM courses WHERE id = @CourseId;", conn);
-      cmd.Parameters.AddWithValue("@CourseId", id.ToString());
+      SqlCommand cmd = new SqlCommand("SELECT * FROM grades WHERE id = @GradeId;", conn);
+      cmd.Parameters.AddWithValue("@GradeId", id.ToString());
       SqlDataReader rdr = cmd.ExecuteReader();
 
-      int foundCourseId = 0;
-      string foundCoursename = null;
+      int foundGradeId = 0;
+      string foundAttendance = null;
+      string foundGrade = null;
 
       while(rdr.Read())
       {
-        foundCourseId = rdr.GetInt32(0);
-        foundCoursename = rdr.GetString(1);
+        foundGradeId = rdr.GetInt32(0);
+        foundAttendance = rdr.GetString(1);
+        foundGrade = rdr.GetString(2);
       }
-      Course foundCourse = new Course(foundCoursename, foundCourseId);
+      Grade newGrade = new Grade(foundAttendance, foundGrade, foundGradeId);
 
       if(rdr != null)
       {
@@ -119,7 +130,7 @@ namespace Kickstart
       {
         conn.Close();
       }
-      return foundCourse;
+      return newGrade;
     }
 
   //   public void AddVenue(Venue newVenue)
@@ -127,10 +138,10 @@ namespace Kickstart
   //    SqlConnection conn = DB.Connection();
   //    conn.Open();
    //
-  //    SqlCommand cmd = new SqlCommand("INSERT INTO courses_venues (school_id, venue_id) VALUES (@CourseId, @VenueId);", conn);
+  //    SqlCommand cmd = new SqlCommand("INSERT INTO tracks_venues (school_id, venue_id) VALUES (@GradeId, @VenueId);", conn);
    //
   //    SqlParameter schoolIdParameter = new SqlParameter();
-  //    schoolIdParameter.ParameterName = "@CourseId";
+  //    schoolIdParameter.ParameterName = "@GradeId";
   //    schoolIdParameter.Value = this.GetId();
   //    cmd.Parameters.Add(schoolIdParameter);
    //
@@ -152,9 +163,9 @@ namespace Kickstart
   //   SqlConnection conn = DB.Connection();
   //   conn.Open();
   //
-  //   SqlCommand cmd = new SqlCommand("SELECT venues.* FROM venues JOIN courses_venues ON (courses_venues.venue_id = venues.id) JOIN courses ON (courses.id = courses_venues.school_id) WHERE school_id = @CourseId;", conn);
+  //   SqlCommand cmd = new SqlCommand("SELECT venues.* FROM venues JOIN tracks_venues ON (tracks_venues.venue_id = venues.id) JOIN tracks ON (tracks.id = tracks_venues.school_id) WHERE school_id = @GradeId;", conn);
   //   SqlParameter schoolIdParameter = new SqlParameter();
-  //   schoolIdParameter.ParameterName = "@CourseId";
+  //   schoolIdParameter.ParameterName = "@GradeId";
   //   schoolIdParameter.Value = this.GetId();
   //   cmd.Parameters.Add(schoolIdParameter);
   //   SqlDataReader rdr = cmd.ExecuteReader();
@@ -164,8 +175,8 @@ namespace Kickstart
   //   {
   //     int venueId = rdr.GetInt32(0);
   //     string venueName = rdr.GetString(1);
-  //     string venuename = rdr.GetString(2);
-  //     Venue newVenue = new Venue(venueName, venuename, venueId);
+  //     string venueattendance = rdr.GetString(2);
+  //     Venue newVenue = new Venue(venueName, venueattendance, venueId);
   //     allVenues.Add(newVenue);
   //   }
   //   if (rdr != null)
@@ -176,15 +187,16 @@ namespace Kickstart
   //   return allVenues;
   // }
 
-  public static void Update(string newname, int id)
+  public static void Update(string newAttendance, string newGrade, int id)
     {
       SqlConnection conn = DB.Connection();
       conn.Open();
 
-      SqlCommand cmd = new SqlCommand("UPDATE courses SET course_name = @CourseName WHERE id = @CourseId;", conn);
+      SqlCommand cmd = new SqlCommand("UPDATE grades SET attendance = @Attendance, grade = @Grade WHERE id = @GradeId;", conn);
 
-      cmd.Parameters.AddWithValue("@CourseName", newname);
-      cmd.Parameters.AddWithValue("@CourseId", id.ToString());
+      cmd.Parameters.AddWithValue("@Attendance", newAttendance);
+      cmd.Parameters.AddWithValue("@Grade", newGrade);
+      cmd.Parameters.AddWithValue("@GradeId", id.ToString());
 
       SqlDataReader rdr = cmd.ExecuteReader();
 
@@ -198,13 +210,13 @@ namespace Kickstart
       }
     }
 
-    public static void RemoveACourse(int id)
+    public static void RemoveAGrade(int id)
     {
       SqlConnection conn = DB.Connection();
       conn.Open();
 
-      SqlCommand cmd = new SqlCommand("DELETE FROM courses WHERE id = @CourseId;", conn);
-      cmd.Parameters.AddWithValue("@CourseId", id.ToString());
+      SqlCommand cmd = new SqlCommand("DELETE FROM grades WHERE id = @GradeId;", conn);
+      cmd.Parameters.AddWithValue("@GradeId", id.ToString());
       SqlDataReader rdr = cmd.ExecuteReader();
 
       if (rdr != null)
@@ -221,7 +233,7 @@ namespace Kickstart
     {
       SqlConnection conn = DB.Connection();
       conn.Open();
-      SqlCommand cmd = new SqlCommand("Delete FROM courses;", conn);
+      SqlCommand cmd = new SqlCommand("Delete FROM grades;", conn);
       cmd.ExecuteNonQuery();
       conn.Close();
     }

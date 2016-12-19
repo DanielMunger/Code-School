@@ -149,59 +149,49 @@ namespace Kickstart
       return foundSchool;
     }
 
-  //   public void AddVenue(Venue newVenue)
-  //  {
-  //    SqlConnection conn = DB.Connection();
-  //    conn.Open();
-   //
-  //    SqlCommand cmd = new SqlCommand("INSERT INTO schools_venues (school_id, venue_id) VALUES (@SchoolId, @VenueId);", conn);
-   //
-  //    SqlParameter schoolIdParameter = new SqlParameter();
-  //    schoolIdParameter.ParameterName = "@SchoolId";
-  //    schoolIdParameter.Value = this.GetId();
-  //    cmd.Parameters.Add(schoolIdParameter);
-   //
-  //    SqlParameter venueIdParameter = new SqlParameter();
-  //    venueIdParameter.ParameterName = "@VenueId";
-  //    venueIdParameter.Value = newVenue.GetId();
-  //    cmd.Parameters.Add(venueIdParameter);
-   //
-  //    cmd.ExecuteNonQuery();
-   //
-  //    if(conn!= null)
-  //    {
-  //      conn.Close();
-  //    }
-  //  }
-  //
-  //  public List<Venue> GetVenues()
-  // {
-  //   SqlConnection conn = DB.Connection();
-  //   conn.Open();
-  //
-  //   SqlCommand cmd = new SqlCommand("SELECT venues.* FROM venues JOIN schools_venues ON (schools_venues.venue_id = venues.id) JOIN schools ON (schools.id = schools_venues.school_id) WHERE school_id = @SchoolId;", conn);
-  //   SqlParameter schoolIdParameter = new SqlParameter();
-  //   schoolIdParameter.ParameterName = "@SchoolId";
-  //   schoolIdParameter.Value = this.GetId();
-  //   cmd.Parameters.Add(schoolIdParameter);
-  //   SqlDataReader rdr = cmd.ExecuteReader();
-  //
-  //   List<Venue> allVenues = new List<Venue> {};
-  //   while(rdr.Read())
-  //   {
-  //     int venueId = rdr.GetInt32(0);
-  //     string venueName = rdr.GetString(1);
-  //     string venueCity = rdr.GetString(2);
-  //     Venue newVenue = new Venue(venueName, venueCity, venueId);
-  //     allVenues.Add(newVenue);
-  //   }
-  //   if (rdr != null)
-  //   {
-  //     rdr.Close();
-  //   }
-  //
-  //   return allVenues;
-  // }
+    public void AddTrack(Track newTrack)
+   {
+     SqlConnection conn = DB.Connection();
+     conn.Open();
+
+     SqlCommand cmd = new SqlCommand("INSERT INTO schools_tracks (school_id, track_id) VALUES (@SchoolId, @TrackId);", conn);
+
+     cmd.Parameters.AddWithValue("@SchoolId", this.GetId());
+     cmd.Parameters.AddWithValue("@TrackId", newTrack.GetId());
+
+     cmd.ExecuteNonQuery();
+
+     if(conn!= null)
+     {
+       conn.Close();
+     }
+   }
+
+   public List<Track> GetTracks()
+  {
+    SqlConnection conn = DB.Connection();
+    conn.Open();
+
+    SqlCommand cmd = new SqlCommand("SELECT tracks.* FROM tracks JOIN schools_tracks ON (tracks.id = schools_tracks.track_id) JOIN schools ON (schools_tracks.school_id = schools.id) WHERE school_id = @SchoolId;", conn);
+    cmd.Parameters.AddWithValue("@SchoolId", this.GetId());
+
+    SqlDataReader rdr = cmd.ExecuteReader();
+
+    List<Track> allTracks = new List<Track> {};
+    while(rdr.Read())
+    {
+      int trackId = rdr.GetInt32(0);
+      string trackName = rdr.GetString(1);
+      Track newTrack = new Track(trackName, trackId);
+      allTracks.Add(newTrack);
+    }
+    if (rdr != null)
+    {
+      rdr.Close();
+    }
+
+    return allTracks;
+  }
 
   public static void Update(string newCity, string newAddress, string newPhone, int id)
     {
@@ -250,7 +240,7 @@ namespace Kickstart
     {
       SqlConnection conn = DB.Connection();
       conn.Open();
-      SqlCommand cmd = new SqlCommand("Delete FROM schools;", conn);
+      SqlCommand cmd = new SqlCommand("Delete FROM schools; Delete FROM schools_tracks;", conn);
       cmd.ExecuteNonQuery();
       conn.Close();
     }
