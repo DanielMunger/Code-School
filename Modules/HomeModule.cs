@@ -22,7 +22,8 @@ namespace Kickstart
       };
       Get["/locations"] = _ =>
       {
-        return View["locations.cshtml"];
+        List<School> allSchools = School.GetAll();
+        return View["locations.cshtml", allSchools];
       };
       Get["/account/create"] = _ =>
       {
@@ -32,6 +33,27 @@ namespace Kickstart
       {
         return View["login.cshtml"];
       };
+
+      // Routes for Locations Page
+      Get["/locations/add"] = _ =>
+      {
+        return View["add_school.cshtml"];
+      };
+      Post["/locations/add"] = _ =>
+      {
+        School newSchool = new School(Request.Form["school-city"], Request.Form["school-address"], Request.Form["school-phone"]);
+        newSchool.Save();
+        return View["add_school.cshtml", newSchool];
+      };
+      Get["/locations/{id}"] = parameters =>
+      {
+        Dictionary<string, object> myDict = new Dictionary<string, object>{};
+        School currentSchool = School.Find(parameters.id);
+        myDict.Add("tracks", School.GetTracks());
+        myDict.Add("instructors", School.GetInstructors());
+        return View["location_details.cshtml"];
+      };
+
 
       // Routes for login
       Post["/account/login"] = _ =>

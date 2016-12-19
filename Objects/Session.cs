@@ -7,6 +7,6 @@ namespace Kickstart
 {
   public class Session
   {
-    public static List<Session> currentSession = new List<Session>l
+    public static List<Session> currentSession = new List<Session>{};
   }
 }
