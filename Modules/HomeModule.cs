@@ -37,7 +37,7 @@ namespace Kickstart
       Post["/account/login"] = _ =>
       {
         return View["index.cshtml"];
-      }
+      };
 
       // Routes for Account Creation
       Post["/account/create"] = _ =>

@@ -221,7 +221,7 @@ namespace Kickstart
     {
       SqlConnection conn = DB.Connection();
       conn.Open();
-      SqlCommand cmd = new SqlCommand("Delete FROM tracks;", conn);
+      SqlCommand cmd = new SqlCommand("Delete FROM tracks; Delete FROM schools_tracks;", conn);
       cmd.ExecuteNonQuery();
       conn.Close();
     }
