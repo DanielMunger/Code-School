@@ -24,24 +24,43 @@ namespace Kickstart
       Assert.Equal(testList, allTracks);
     }
 
-    // [Fact]
-    // public void Test_GetVenuesAssociatedWithTrack()
-    // {
-    //   List<Venue> allVenues = new List<Venue>{};
-    //   List<Venue> testVenues = new List<Venue>{};
-    //
-    //   Band newBand = new Band("Band");
-    //   newBand.Save();
-    //
-    //   Venue newVenue = new Venue("Venue", "San Francisco");
-    //   newVenue.Save();
-    //
-    //   newBand.AddVenue(newVenue);
-    //   allVenues = newBand.GetVenues();
-    //   testVenues.Add(newVenue);
-    //
-    //   Assert.Equal(testVenues, allVenues);
-    // }
+    [Fact]
+    public void Test_GetStudentsAssociatedWithTrack()
+    {
+      List<Student> allStudents = new List<Student>{};
+      List<Student> testStudents = new List<Student>{};
+
+      Track newTrack = new Track("C#");
+      newTrack.Save();
+
+      Student newStudent = new Student("Student", "Student", "student1", "password", "123 fake st", "student@gmail.com");
+      newStudent.Save();
+
+      newTrack.AddStudent(newStudent);
+      allStudents = newTrack.GetStudents();
+      testStudents.Add(newStudent);
+
+      Assert.Equal(testStudents, allStudents);
+    }
+
+    [Fact]
+    public void Test_GetInstructorAssociatedWithTrack()
+    {
+      List<Instructor> allInstructors = new List<Instructor>{};
+      List<Instructor> testInstructors = new List<Instructor>{};
+
+      Track newTrack = new Track("C#");
+      newTrack.Save();
+
+      Instructor newInstructor = new Instructor("Instructor", "student1", "password", "123 fake st", "student@gmail.com");
+      newInstructor.Save();
+
+      newTrack.AddInstructor(newInstructor);
+      allInstructors = newTrack.GetInstructors();
+      testInstructors.Add(newInstructor);
+
+      Assert.Equal(testInstructors, allInstructors);
+    }
 
     [Fact]
     public void Test_CheckUpdateTrackInfo_True()
@@ -69,6 +88,7 @@ namespace Kickstart
     public void Dispose()
     {
       Track.DeleteAll();
+      Student.DeleteAll();
     }
   }
 }

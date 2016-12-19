@@ -24,24 +24,24 @@ namespace Kickstart
       Assert.Equal(testList, allStudents);
     }
 
-    // [Fact]
-    // public void Test_GetVenuesAssociatedWithStudent()
-    // {
-    //   List<Venue> allVenues = new List<Venue>{};
-    //   List<Venue> testVenues = new List<Venue>{};
-    //
-    //   Band newBand = new Band("Band");
-    //   newBand.Save();
-    //
-    //   Venue newVenue = new Venue("Venue", "San Francisco");
-    //   newVenue.Save();
-    //
-    //   newBand.AddVenue(newVenue);
-    //   allVenues = newBand.GetVenues();
-    //   testVenues.Add(newVenue);
-    //
-    //   Assert.Equal(testVenues, allVenues);
-    // }
+    [Fact]
+    public void Test_GetTracksAssociatedWithStudent()
+    {
+      List<Track> allTracks = new List<Track>{};
+      List<Track> testTracks = new List<Track>{};
+
+      Student newStudent = new Student("Daniel", "Munger", "dmunger", "password", "123 fake st", "mungerda@gmail.com");
+      newStudent.Save();
+
+      Track newTrack = new Track("Track");
+      newTrack.Save();
+
+      newStudent.AddTrack(newTrack);
+      allTracks = newStudent.GetTracks();
+      testTracks.Add(newTrack);
+
+      Assert.Equal(testTracks, allTracks);
+    }
 
     [Fact]
     public void Test_CheckUpdateStudentInfo_True()

@@ -44,6 +44,44 @@ namespace Kickstart
     }
 
     [Fact]
+    public void Test_GetStudentsAssociatedWithSchool()
+    {
+      List<Student> allStudents = new List<Student>{};
+      List<Student> testStudents = new List<Student>{};
+
+      School newSchool = new School("Portland", "123 fake street", "9709709999");
+      newSchool.Save();
+
+      Student newStudent = new Student("Student", "Student", "student1", "password", "123 fake st", "student@gmail.com");
+      newStudent.Save();
+
+      newSchool.AddStudent(newStudent);
+      allStudents = newSchool.GetStudents();
+      testStudents.Add(newStudent);
+
+      Assert.Equal(testStudents, allStudents);
+    }
+
+    [Fact]
+    public void Test_GetInstructorsAssociatedWithSchool()
+    {
+      List<Instructor> allInstructors = new List<Instructor>{};
+      List<Instructor> testInstructors = new List<Instructor>{};
+
+      School newSchool = new School("Portland", "123 fake street", "9709709999");
+      newSchool.Save();
+
+      Instructor newInstructor = new Instructor("Student", "student1", "password", "123 fake st", "student@gmail.com");
+      newInstructor.Save();
+
+      newSchool.AddInstructor(newInstructor);
+      allInstructors = newSchool.GetInstructors();
+      testInstructors.Add(newInstructor);
+
+      Assert.Equal(testInstructors, allInstructors);
+    }
+
+    [Fact]
     public void Test_CheckUpdateSchoolInfo_True()
     {
       School newSchool = new School("Portland", "123 fake street", "9709709999");
@@ -69,6 +107,9 @@ namespace Kickstart
     public void Dispose()
     {
       School.DeleteAll();
+      Student.DeleteAll();
+      Track.DeleteAll();
+      Instructor.DeleteAll();
     }
   }
 }
