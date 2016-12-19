@@ -2,6 +2,11 @@
   Layout="Shared/_Layout.cshtml";
 }
 
-<h3>Here are our gnarly course locations:</h3>
+<h3>Here are our locations:</h3>
+
+@foreach (var location in Model)
+{
+  <li><a href="/locations/@location.GetId()">location.GetCity()</a></li>
+}
 
 <a href="/">Return to Home</a>
