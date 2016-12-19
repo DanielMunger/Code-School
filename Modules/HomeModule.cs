@@ -32,6 +32,24 @@ namespace Modules
       {
         return View["login.cshtml"];
       };
+
+      // Routes for login
+      Post["/account/login"] = _ =>
+      {
+        return View["index.cshtml"];
+      }
+
+      // Routes for Account Creation
+      Post["/account/create"] = _ =>
+      {
+        string firstName = Request.Form["first-name"];
+        string lastName = Request.Form["last-name"];
+        string userName = Request.Form["user-name"];
+        string password = Request.Form["password"];
+        string address = Request.Form["address"];
+        string email = Request.Form["email"];
+        return View["index.cshtml"];
+      };
     }
   }
 }
