@@ -1,8 +1,8 @@
 using Nancy;
 using System.Collections.Generic;
-using Namespace.Startup;
+using Kickstart;
 
-namespace Modules
+namespace Kickstart
 {
   public class HomeModule : NancyModule
   {
