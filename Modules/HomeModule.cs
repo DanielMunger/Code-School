@@ -36,6 +36,8 @@ namespace Kickstart
       // Routes for login
       Post["/account/login"] = _ =>
       {
+        string username = Request.Form["user-name"];
+        string pwd = Request.Form["user-password"];
         return View["index.cshtml"];
       };
 
