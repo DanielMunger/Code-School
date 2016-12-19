@@ -183,59 +183,49 @@ namespace Kickstart
       return foundStudent;
     }
 
-  //   public void AddVenue(Venue newVenue)
-  //  {
-  //    SqlConnection conn = DB.Connection();
-  //    conn.Open();
-   //
-  //    SqlCommand cmd = new SqlCommand("INSERT INTO schools_venues (school_id, venue_id) VALUES (@StudentId, @VenueId);", conn);
-   //
-  //    SqlParameter schoolIdParameter = new SqlParameter();
-  //    schoolIdParameter.ParameterName = "@StudentId";
-  //    schoolIdParameter.Value = this.GetId();
-  //    cmd.Parameters.Add(schoolIdParameter);
-   //
-  //    SqlParameter venueIdParameter = new SqlParameter();
-  //    venueIdParameter.ParameterName = "@VenueId";
-  //    venueIdParameter.Value = newVenue.GetId();
-  //    cmd.Parameters.Add(venueIdParameter);
-   //
-  //    cmd.ExecuteNonQuery();
-   //
-  //    if(conn!= null)
-  //    {
-  //      conn.Close();
-  //    }
-  //  }
-  //
-  //  public List<Venue> GetVenues()
-  // {
-  //   SqlConnection conn = DB.Connection();
-  //   conn.Open();
-  //
-  //   SqlCommand cmd = new SqlCommand("SELECT venues.* FROM venues JOIN schools_venues ON (schools_venues.venue_id = venues.id) JOIN schools ON (schools.id = schools_venues.school_id) WHERE school_id = @StudentId;", conn);
-  //   SqlParameter schoolIdParameter = new SqlParameter();
-  //   schoolIdParameter.ParameterName = "@StudentId";
-  //   schoolIdParameter.Value = this.GetId();
-  //   cmd.Parameters.Add(schoolIdParameter);
-  //   SqlDataReader rdr = cmd.ExecuteReader();
-  //
-  //   List<Venue> allVenues = new List<Venue> {};
-  //   while(rdr.Read())
-  //   {
-  //     int venueId = rdr.GetInt32(0);
-  //     string venueName = rdr.GetString(1);
-  //     string venueCity = rdr.GetString(2);
-  //     Venue newVenue = new Venue(venueName, venueCity, venueId);
-  //     allVenues.Add(newVenue);
-  //   }
-  //   if (rdr != null)
-  //   {
-  //     rdr.Close();
-  //   }
-  //
-  //   return allVenues;
-  // }
+    public void AddTrack(Track newTrack)
+   {
+     SqlConnection conn = DB.Connection();
+     conn.Open();
+
+     SqlCommand cmd = new SqlCommand("INSERT INTO students_tracks (student_id, track_id) VALUES (@StudentId, @TrackId);", conn);
+
+     cmd.Parameters.AddWithValue("@StudentId", this.GetId());
+     cmd.Parameters.AddWithValue("@TrackId", newTrack.GetId());
+
+     cmd.ExecuteNonQuery();
+
+     if(conn!= null)
+     {
+       conn.Close();
+     }
+   }
+
+   public List<Track> GetTracks()
+  {
+    SqlConnection conn = DB.Connection();
+    conn.Open();
+
+    SqlCommand cmd = new SqlCommand("SELECT tracks.* FROM tracks JOIN students_tracks ON (tracks.id = students_tracks.track_id) JOIN students ON (students_tracks.student_id = students.id) WHERE student_id = @StudentId;", conn);
+    cmd.Parameters.AddWithValue("@StudentId", this.GetId());
+
+    SqlDataReader rdr = cmd.ExecuteReader();
+
+    List<Track> allTracks = new List<Track> {};
+    while(rdr.Read())
+    {
+      int trackId = rdr.GetInt32(0);
+      string trackName = rdr.GetString(1);
+      Track newTrack = new Track(trackName, trackId);
+      allTracks.Add(newTrack);
+    }
+    if (rdr != null)
+    {
+      rdr.Close();
+    }
+
+    return allTracks;
+  }
 
   public static void Update(string newFirstName, string newLastName, string newUserName, string newPassword, string address, string newEmail, int id)
     {
