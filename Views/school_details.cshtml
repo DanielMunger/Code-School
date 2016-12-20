@@ -26,7 +26,7 @@
     @foreach (var track in Model["tracks"])
     {
       <li>@track.GetName()
-        <form action="/track/edit/@track.GetId()" method="post">
+        <form action="/tracks" method="get">
           <input type="hidden" name="school-id" value='@Model["school"].GetId()'>
           <input type="hidden" name="track-id" value='@track.GetId()'>
           <button type="submit">Edit</button>
@@ -41,7 +41,7 @@
   }
   @if (Model["availtracks"].Count > 0)
   {
-    <form class="" action="/tracks/add/" method="post">
+    <form class="" action="/tracks/addto/" method="post">
       <label>Add a new track to this school:</label>
       <input type="hidden" name="school-id" value=@Model["school"].GetId()>
       <select class="" name="track-id">

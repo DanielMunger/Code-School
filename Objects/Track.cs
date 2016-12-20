@@ -312,6 +312,24 @@ namespace Kickstart
       }
     }
 
+    public void Delete()
+    {
+      SqlConnection conn = DB.Connection();
+      conn.Open();
+
+      SqlCommand cmd = new SqlCommand((@"DELETE FROM tracks WHERE id = @TrackId;
+                                        
+                                        DELETE FROM instructors_tracks WHERE id = @TrackId;
+                                        DELETE FROM schools_tracks WHERE id = @TrackId;
+                                        DELETE FROM students_tracks WHERE id = @TrackId;"), conn);
+      cmd.Parameters.AddWithValue("@TrackId", this.GetId());
+      cmd.ExecuteNonQuery();
+      if (conn != null)
+      {
+        conn.Close();
+      }
+    }
+
     public static void DeleteAll()
     {
       SqlConnection conn = DB.Connection();

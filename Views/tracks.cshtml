@@ -8,10 +8,21 @@
 {
   <div class="well title">
     <h4 class="embolden">@track.GetName()</h4>
+    <form action="/track/edit/@track.GetId()" method="post">
+      <input type="hidden" name="track-id" value='@track.GetId()'>
+      <button type="submit">Edit</button>
+    </form>
     <div class="well inline">
       <p>
         Courses:
       </p>
+      @if (track.GetCourses().Count < 3)
+      {
+        <form action="/courses/addto/@track.GetId()" method="get">
+          <input type="hidden" name="track-id" value="@track.GetId()">
+          <button type="submit">Add Course to This Track</button>
+        </form>
+      }
       @foreach(var course in track.GetCourses())
       {
         <span>@course.GetName()</span>
@@ -20,4 +31,6 @@
   </div>
 }
 
+<a href="/tracks/add">Add a Track</a>
+<br>
 <a href="/">Return to Home</a>
