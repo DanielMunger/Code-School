@@ -132,7 +132,47 @@ namespace Kickstart
         myDict.Add("availinstructors", displayInstructors);
         return View["school_details.cshtml", myDict];
       };
+      Post["/track/delete/{id}"] = parameters =>
+      {
+        int schoolId = Request.Form["school-id"];
+        School currentSchool = School.Find(schoolId);
+        currentSchool.RemoveATrack(parameters.id);
 
+        Dictionary<string, object> myDict = new Dictionary<string, object>{};
+        List<Track> schoolTracks = currentSchool.GetTracks();
+        List<Track> allTracks = Track.GetAll();
+        List<Track> displayTracks = new List<Track>{};
+        List<Instructor> schoolInstructors = currentSchool.GetInstructors();
+        List<Instructor> allInstructors = Instructor.GetAll();
+        List<Instructor> displayInstructors = new List<Instructor>{};
+
+        for(int i =0; i < allTracks.Count; i++)
+        {
+          if (schoolTracks.Contains(allTracks[i]) == false)
+          {
+            displayTracks.Add(allTracks[i]);
+          }
+        }
+
+        for(int i =0; i < allInstructors.Count; i++)
+        {
+          if (schoolInstructors.Contains(allInstructors[i]) == false)
+          {
+            displayInstructors.Add(allInstructors[i]);
+          }
+        }
+
+        myDict.Add("school", currentSchool);
+        myDict.Add("tracks", schoolTracks);
+        myDict.Add("availtracks", displayTracks);
+        myDict.Add("currentinstructors", schoolInstructors);
+        myDict.Add("availinstructors", displayInstructors);
+        return View["school_details.cshtml", myDict];
+      };
+
+      //TODO: Build EDIT method for school_details.cshtml Track button
+      //TODO: Build EDIT method for school_details.cshtml Instructor button
+      //TODO: Build DELETE method for school_details.cshtml Instructor button
 
       // Routes for login
       Post["/account/login"] = _ =>
