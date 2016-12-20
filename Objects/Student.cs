@@ -227,6 +227,54 @@ namespace Kickstart
     return allTracks;
   }
 
+  public void AddGrade(Grade newGrade, int courseId)
+   {
+     SqlConnection conn = DB.Connection();
+     conn.Open();
+
+     SqlCommand cmd = new SqlCommand("INSERT INTO courses_grades_students (course_id, student_id, grade_id) VALUES (@CourseId, @StudentId, @GradeId);", conn);
+
+     cmd.Parameters.AddWithValue("@StudentId", this.GetId());
+     cmd.Parameters.AddWithValue("@GradeId", newGrade.GetId());
+     cmd.Parameters.AddWithValue("@CourseId", courseId);
+
+     cmd.ExecuteNonQuery();
+
+     if(conn!= null)
+     {
+       conn.Close();
+     }
+   }
+
+  public List<Grade> GetGrades(int courseId)
+  {
+    SqlConnection conn = DB.Connection();
+    conn.Open();
+
+    SqlCommand cmd = new SqlCommand("SELECT grades.* FROM grades JOIN courses_grades_students ON (grades.id = courses_grades_students.grade_id) JOIN students ON (courses_grades_students.student_id = students.id) JOIN courses ON (courses_grades_students.course_id = courses.id) WHERE student_id = @StudentId AND course_id = @CourseId;", conn);
+
+    cmd.Parameters.AddWithValue("@StudentId", this.GetId());
+    cmd.Parameters.AddWithValue("@CourseId", courseId);
+
+    SqlDataReader rdr = cmd.ExecuteReader();
+
+    List<Grade> allGrades = new List<Grade> {};
+    while(rdr.Read())
+    {
+      int gradeId = rdr.GetInt32(0);
+      string attendance = rdr.GetString(1);
+      string grade = rdr.GetString(2);
+      Grade newGrade = new Grade(attendance, grade, gradeId);
+      allGrades.Add(newGrade);
+    }
+    if (rdr != null)
+    {
+      rdr.Close();
+    }
+
+    return allGrades;
+  }
+
   public static void Update(string newFirstName, string newLastName, string newUserName, string newPassword, string address, string newEmail, int id)
     {
       SqlConnection conn = DB.Connection();

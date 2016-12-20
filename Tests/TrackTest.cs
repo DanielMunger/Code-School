@@ -63,6 +63,25 @@ namespace Kickstart
     }
 
     [Fact]
+    public void Test_GetCourseAssociatedWithTrack()
+    {
+      List<Course> allCourses = new List<Course>{};
+      List<Course> testCourses = new List<Course>{};
+
+      Track newTrack = new Track("C#");
+      newTrack.Save();
+
+      Course newCourse = new Course("Course");
+      newCourse.Save();
+
+      newTrack.AddCourse(newCourse);
+      allCourses = newTrack.GetCourses();
+      testCourses.Add(newCourse);
+
+      Assert.Equal(testCourses, allCourses);
+    }
+
+    [Fact]
     public void Test_CheckUpdateTrackInfo_True()
     {
       Track newTrack = new Track("Daniel");
@@ -89,6 +108,7 @@ namespace Kickstart
     {
       Track.DeleteAll();
       Student.DeleteAll();
+      Course.DeleteAll();
     }
   }
 }

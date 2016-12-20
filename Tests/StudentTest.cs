@@ -44,6 +44,28 @@ namespace Kickstart
     }
 
     [Fact]
+    public void Test_GetGradeAssociatedWithStudent()
+    {
+      List<Grade> allGrades = new List<Grade>{};
+      List<Grade> testGrades = new List<Grade>{};
+
+      Student newStudent = new Student("Daniel", "Munger", "dmunger", "password", "123 fake st", "mungerda@gmail.com");
+      newStudent.Save();
+
+      Course newCourse = new Course("math");
+      newCourse.Save();
+
+      Grade newGrade = new Grade("attendance", "F");
+      newGrade.Save();
+
+      newStudent.AddGrade(newGrade, newCourse.GetId());
+      allGrades = newStudent.GetGrades(newCourse.GetId());
+      testGrades.Add(newGrade);
+
+      Assert.Equal(testGrades, allGrades);
+    }
+
+    [Fact]
     public void Test_CheckUpdateStudentInfo_True()
     {
       Student newStudent = new Student("Daniel", "Munger", "dmunger", "password", "123 fake st", "mungerda@gmail.com");
