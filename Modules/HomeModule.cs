@@ -218,16 +218,34 @@ namespace Kickstart
         myDict.Add("currenttrack", Track.Find(parameters.id));
         return View["course_add.cshtml", myDict];
       };
+
+
       Post["/courses/addto"] = _ =>
       {
         string newName = Request.Form["course-name"];
         Track selectedTrack = Track.Find(Request.Form["track-id"]);
-        Course newCourse = new Course(newName);
-        newCourse.Save();
-        selectedTrack.AddCourse(newCourse);
         List<Track> allTracks = Track.GetAll();
+
+        bool Exists = false;
+        foreach (Track track in allTracks)
+        {
+          if (newName.ToLower() == track.GetName().ToLower())
+          {
+            Exists = true;
+          }
+        }
+
+        if (Exists)
+        {
+          Course newCourse = new Course(newName);
+          newCourse.Save();
+          selectedTrack.AddCourse(newCourse);
+        }
+
         return View["tracks.cshtml", allTracks];
       };
+
+
       Post["/courses/addexisting"] = _ =>
       {
         Track selectedTrack = Track.Find(Request.Form["track-id"]);
