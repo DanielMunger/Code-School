@@ -9,7 +9,7 @@
         <li><a href="/">Home</a></li>
         <li><a href="/courses">Courses</a></li>
         <li><a href="/instructors">Instructors</a></li>
-        <li><a href="/locations">Locations</a></li>
+        <li><a href="/schools">Schools</a></li>
         <li><a href="/account/create">Create Account</a></li>
         <li><a href="/account/login">Login</a></li>
       </ul>
@@ -28,29 +28,46 @@
       <li>@track.GetName()</li>
     }
   }
-  <form class="" action="/tracks/add/" method="post">
-    <label>Add a new track to this school:</label>
-    <input type="hidden" name="school-id" value=@Model["school"].GetId()>
-    <select class="" name="track-id">
-      @foreach (var track in Model["availtracks"])
-      {
-        <option value=@track.GetId()>@track.GetName()</option>
-      }
-    </select>
-    <button type="submit">Add Track</button>
-  </form>
+  @if (Model["availtracks"].Count > 0)
+  {
+    <form class="" action="/tracks/add/" method="post">
+      <label>Add a new track to this school:</label>
+      <input type="hidden" name="school-id" value=@Model["school"].GetId()>
+      <select class="" name="track-id">
+        @foreach (var track in Model["availtracks"])
+        {
+          <option value=@track.GetId()>@track.GetName()</option>
+        }
+      </select>
+      <button type="submit">Add Track</button>
+    </form>
+  }
 </div>
 
 <br>
 
 <div class="instructors">
-  @if (Model["instructors"]!=null)
+  @if (Model["currentinstructors"]!=null)
   {
       <span>Here are the instructors at this school:</span>
-      @foreach (var instructor in Model["instructors"])
+      @foreach (var instructor in Model["currentinstructors"])
       {
         <li>@instructor.GetName()</li>
       }
+  }
+  @if (Model["availinstructors"].Count > 0)
+  {
+    <form class="" action="/instructors/add/" method="post">
+      <label>Add a new instructor to this school:</label>
+      <input type="hidden" name="school-id" value=@Model["school"].GetId()>
+      <select class="" name="instructor-id">
+        @foreach (var instructor in Model["availinstructors"])
+        {
+          <option value=@instructor.GetId()>@instructor.GetName()</option>
+        }
+      </select>
+      <button type="submit">Add Instructor</button>
+    </form>
   }
 </div>
 <br>
