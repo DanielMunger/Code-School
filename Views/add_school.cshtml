@@ -1,0 +1,30 @@
+@{
+  Layout="Shared/_Layout.cshtml";
+}
+
+<form action="/locations/add" method="post">
+  <div class="form-group">
+    <label for="school-city">Enter the city name</label>
+    <input class="form-control" name="school-city" type="text">
+  </div>
+  <div class="form-group">
+    <label for="school-address">Enter in the school's address</label>
+    <input class="form-control" name="school-address" type="text">
+  </div>
+  <div class="form-group">
+    <label for="school-phone">Enter the schools phone number</label>
+    <input class="form-control" name="school-phone" type="text">
+  </div>
+  <button type="submit" class="btn btn-info">Add School</button>
+</form>
+@if(Model!=null)
+{
+  <div class="container text-center">
+    <h4>The School Has Been Added</h4>
+    <p>A new Kickstart has been added to: @Model.GetCity()</p>
+  </div>
+}
+<br>
+<a href="/locations">Return to Locations</a>
+<br>
+<a href="/">Return to Home</a>
