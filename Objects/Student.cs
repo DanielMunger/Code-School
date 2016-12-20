@@ -246,7 +246,7 @@ namespace Kickstart
      }
    }
 
-   public List<Track> GetTracks()
+   public Track GetTrack()
   {
     SqlConnection conn = DB.Connection();
     conn.Open();
@@ -256,20 +256,22 @@ namespace Kickstart
 
     SqlDataReader rdr = cmd.ExecuteReader();
 
-    List<Track> allTracks = new List<Track> {};
+    int trackId = 0;
+    string trackName = null;
     while(rdr.Read())
     {
-      int trackId = rdr.GetInt32(0);
-      string trackName = rdr.GetString(1);
-      Track newTrack = new Track(trackName, trackId);
-      allTracks.Add(newTrack);
+      trackId = rdr.GetInt32(0);
+      trackName = rdr.GetString(1);
     }
+
+    Track newTrack = new Track(trackName, trackId);
+
     if (rdr != null)
     {
       rdr.Close();
     }
 
-    return allTracks;
+    return newTrack;
   }
 
   public List<Course> GetCourses()
@@ -318,7 +320,7 @@ namespace Kickstart
      }
    }
 
-  public List<Grade> GetGrades(int courseId)
+  public Grade GetGrades(int courseId)
   {
     SqlConnection conn = DB.Connection();
     conn.Open();
@@ -330,21 +332,24 @@ namespace Kickstart
 
     SqlDataReader rdr = cmd.ExecuteReader();
 
-    List<Grade> allGrades = new List<Grade> {};
+    int gradeId = 0;
+    string attendance = null;
+    string grade = null;
     while(rdr.Read())
     {
-      int gradeId = rdr.GetInt32(0);
-      string attendance = rdr.GetString(1);
-      string grade = rdr.GetString(2);
-      Grade newGrade = new Grade(attendance, grade, gradeId);
-      allGrades.Add(newGrade);
+      gradeId = rdr.GetInt32(0);
+      attendance = rdr.GetString(1);
+      grade = rdr.GetString(2);
     }
+
+    Grade newGrade = new Grade(attendance, grade, gradeId);
+
     if (rdr != null)
     {
       rdr.Close();
     }
 
-    return allGrades;
+    return newGrade;
   }
 
   public static void Update(string newFirstName, string newLastName, string newUserName, string newPassword, string address, string newEmail, int id)

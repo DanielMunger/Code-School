@@ -16,3 +16,9 @@
     </div>
   </nav>
 </div>
+<h3>Student Info for: @Model["student"].GetUserName()</h3>
+<h4>Current Track: @Model["track"].GetName()</h4>
+@for (var i = 0; i < Model["courses"].Count; i++)
+{
+  <li>Course: @Model["courses"][i].GetName(), Attendance: @Model["grades"][i].GetAttendance(), Grade: @Model["grades"][i].GetGrade()</li>
+}
