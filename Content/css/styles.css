@@ -5,3 +5,27 @@ li{
 button{
   border-radius: 10px;
 }
+
+.inline {
+  width: 100%;
+  background-color: lightgrey;
+  display: inline-block;
+  text-align: center;
+}
+
+.inline span {
+  margin-left: 20px;
+  margin-right: 20px;
+  font-size: 16px;
+  /*float: left;*/
+}
+
+.title {
+  text-align: center;
+
+}
+
+.embolden {
+  font-size: 20;
+  font-weight: bolder;
+}

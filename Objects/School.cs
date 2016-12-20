@@ -36,6 +36,10 @@ namespace Kickstart
         return (idEquality && cityEquality && addressEquality && phoneEquality);
       }
     }
+    public override int GetHashCode()
+    {
+      return this.GetCity().GetHashCode();
+    }
     public int GetId()
     {
       return _id;

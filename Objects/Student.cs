@@ -45,6 +45,10 @@ namespace Kickstart
         return (idEquality && firstNameEquality && lastNameEquality && userNameEquality && passwordEquality && addressEquality && emailEquality);
       }
     }
+    public override int GetHashCode()
+    {
+      return this.GetFirstName().GetHashCode();
+    }
     public int GetId()
     {
       return _id;
