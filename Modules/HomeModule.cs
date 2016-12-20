@@ -39,11 +39,18 @@ namespace Kickstart
       Get["/student/details/{id}"] = parameters =>{
         Dictionary<string, object> model = new Dictionary<string, object>{};
         Student foundStudent = Student.Find(parameters.id);
-        List<Track> tracks = foundStudent.GetTracks();
+        Track newTrack = foundStudent.GetTrack();
         List<Course> courses = foundStudent.GetCourses();
+        List<Grade> grades = new List<Grade> {};
+        foreach(Course course in courses)
+        {
+          Grade newGrade = foundStudent.GetGrades(course.GetId());
+          grades.Add(newGrade);
+        }
         model.Add("student", foundStudent);
-        model.Add("tracks", tracks);
+        model.Add("track", newTrack);
         model.Add("courses", courses);
+        model.Add("grades", grades);
         return View["student_details.cshtml", model];
       };
 

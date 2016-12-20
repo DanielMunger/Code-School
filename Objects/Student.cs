@@ -246,7 +246,7 @@ namespace Kickstart
      }
    }
 
-   public List<Track> GetTracks()
+   public Track GetTrack()
   {
     SqlConnection conn = DB.Connection();
     conn.Open();
@@ -256,20 +256,22 @@ namespace Kickstart
 
     SqlDataReader rdr = cmd.ExecuteReader();
 
-    List<Track> allTracks = new List<Track> {};
+    int trackId = 0;
+    string trackName = null;
     while(rdr.Read())
     {
-      int trackId = rdr.GetInt32(0);
-      string trackName = rdr.GetString(1);
-      Track newTrack = new Track(trackName, trackId);
-      allTracks.Add(newTrack);
+      trackId = rdr.GetInt32(0);
+      trackName = rdr.GetString(1);
     }
+
+    Track newTrack = new Track(trackName, trackId);
+
     if (rdr != null)
     {
       rdr.Close();
     }
 
-    return allTracks;
+    return newTrack;
   }
 
   public List<Course> GetCourses()

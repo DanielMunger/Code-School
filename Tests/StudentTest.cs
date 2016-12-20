@@ -27,9 +27,6 @@ namespace Kickstart
     [Fact]
     public void Test_GetTracksAssociatedWithStudent()
     {
-      List<Track> allTracks = new List<Track>{};
-      List<Track> testTracks = new List<Track>{};
-
       Student newStudent = new Student("Daniel", "Munger", "dmunger", "password", "123 fake st", "mungerda@gmail.com");
       newStudent.Save();
 
@@ -37,10 +34,9 @@ namespace Kickstart
       newTrack.Save();
 
       newStudent.AddTrack(newTrack);
-      allTracks = newStudent.GetTracks();
-      testTracks.Add(newTrack);
+      Track testTrack = newStudent.GetTrack();
 
-      Assert.Equal(testTracks, allTracks);
+      Assert.Equal(newTrack, testTrack);
     }
 
     // [Fact]
