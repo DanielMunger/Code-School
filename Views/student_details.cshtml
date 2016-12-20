@@ -21,7 +21,7 @@
     <li>Address: @Model["student"].GetAddress()</li>
     <li>Email: @Model["student"].GetEmail()</li>
     <li>Current Track: @Model["track"].GetName()
-      @* <form class="" action="/tracks/student-add/" method="post">
+      <form class="" action="/student/add-track" method="post">
         <label>Add a new track to this student:</label>
         <input type="hidden" name="student-id" value=@Model["student"].GetId()>
         <select class="" name="track-id">
@@ -31,7 +31,7 @@
           }
         </select>
         <button type="submit">Add Track</button>
-      </form> *@
+      </form>
       <ul><h3>Courses and grades</h3>
       @for (var i = 0; i < Model["courses"].Count; i++)
       {
