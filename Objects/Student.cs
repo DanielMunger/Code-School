@@ -183,6 +183,47 @@ namespace Kickstart
       return foundStudent;
     }
 
+    public static Student FindByLogin(string user, string pass)
+    {
+      SqlConnection conn = DB.Connection();
+      conn.Open();
+
+      SqlCommand cmd = new SqlCommand("SELECT * FROM students WHERE username = @UserName AND password = @Password;", conn);
+      cmd.Parameters.AddWithValue("@UserName", user);
+      cmd.Parameters.AddWithValue("@Password", pass);
+      SqlDataReader rdr = cmd.ExecuteReader();
+
+      int foundStudentId = 0;
+      string foundStudentFirstName = null;
+      string foundStudentLastName = null;
+      string foundStudentUserName = null;
+      string foundStudentPassword = null;
+      string foundStudentAddress = null;
+      string foundStudentEmail = null;
+      while(rdr.Read())
+      {
+        foundStudentId = rdr.GetInt32(0);
+        foundStudentFirstName = rdr.GetString(1);
+        foundStudentLastName = rdr.GetString(2);
+        foundStudentUserName = rdr.GetString(3);
+        foundStudentPassword = rdr.GetString(4);
+        foundStudentAddress = rdr.GetString(5);
+        foundStudentEmail = rdr.GetString(6);
+
+      }
+      Student foundStudent = new Student(foundStudentFirstName, foundStudentLastName, foundStudentUserName, foundStudentPassword, foundStudentAddress, foundStudentEmail, foundStudentId);
+
+      if(rdr != null)
+      {
+        rdr.Close();
+      }
+      if(conn != null)
+      {
+        conn.Close();
+      }
+      return foundStudent;
+    }
+
     public void AddTrack(Track newTrack)
    {
      SqlConnection conn = DB.Connection();
@@ -226,6 +267,33 @@ namespace Kickstart
 
     return allTracks;
   }
+
+  public List<Track> GetCourses()
+ {
+   SqlConnection conn = DB.Connection();
+   conn.Open();
+
+   SqlCommand cmd = new SqlCommand("SELECT courses.* FROM courses JOIN courses_tracks ON (courses.id = courses_tracks.course_id) JOIN students_tracks ON (students_tracks.track_id = courses_tracks.track_id) WHERE student_id = @StudentId;", conn);
+   cmd.Parameters.AddWithValue("@StudentId", this.GetId());
+
+   SqlDataReader rdr = cmd.ExecuteReader();
+
+   List<Course> allCourse = new List<Course> {};
+   while(rdr.Read())
+   {
+     int courseId = rdr.GetInt32(0);
+     string courseName = rdr.GetString(1);
+     Course newCourse = new Course(courseName, courseId);
+     allCourse.Add(newCourse);
+   }
+   if (rdr != null)
+   {
+     rdr.Close();
+   }
+
+   return allCourse;
+ }
+
 
   public void AddGrade(Grade newGrade, int courseId)
    {

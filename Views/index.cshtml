@@ -9,8 +9,16 @@
           <li><a href="/courses">Courses</a></li>
           <li><a href="/instructors">Instructors</a></li>
           <li><a href="/schools">Schools</a></li>
-          <li><a href="/account/create">Create Account</a></li>
-          <li><a href="/account/login">Login</a></li>
+          @if (@Model == null)
+          {
+            <li><a href="/account/create">Create Account</a></li>
+            <li><a href="/account/login">Login</a></li>
+          }
+          else
+          {
+            <li><a href="/student/details/@Model.GetId()">@Model.GetUserName()</a></li>
+          }
+
         </ul>
       </div>
   </nav>
