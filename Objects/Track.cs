@@ -223,6 +223,50 @@ namespace Kickstart
       return allInstructors;
     }
 
+    public void AddCourse(Course newCourse)
+    {
+     SqlConnection conn = DB.Connection();
+     conn.Open();
+
+     SqlCommand cmd = new SqlCommand("INSERT INTO courses_tracks (course_id, track_id) VALUES (@CourseId, @TrackId);", conn);
+
+     cmd.Parameters.AddWithValue("@TrackId", this.GetId());
+     cmd.Parameters.AddWithValue("@CourseId", newCourse.GetId());
+
+     cmd.ExecuteNonQuery();
+
+     if(conn!= null)
+     {
+       conn.Close();
+     }
+    }
+
+    public List<Course> GetCourses()
+    {
+      SqlConnection conn = DB.Connection();
+      conn.Open();
+
+      SqlCommand cmd = new SqlCommand("SELECT courses.* FROM tracks JOIN courses_tracks ON (tracks.id = courses_tracks.track_id) JOIN courses ON (courses_tracks.course_id = courses.id) WHERE track_id = @TrackId;", conn);
+      cmd.Parameters.AddWithValue("@TrackId", this.GetId());
+
+      SqlDataReader rdr = cmd.ExecuteReader();
+
+      List<Course> allCourses = new List<Course> {};
+      while(rdr.Read())
+      {
+        int courseId = rdr.GetInt32(0);
+        string courseName = rdr.GetString(1);
+        Course newCourse = new Course(courseName, courseId);
+        allCourses.Add(newCourse);
+      }
+      if (rdr != null)
+      {
+        rdr.Close();
+      }
+        return allCourses;
+    }
+
+
     public static void Update(string newname, int id)
     {
       SqlConnection conn = DB.Connection();
