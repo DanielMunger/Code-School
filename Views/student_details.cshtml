@@ -16,3 +16,18 @@
     </div>
   </nav>
 </div>
+<h3>Student Info for: @Model["student"].GetUserName()</h3>
+@if(@Model["courses"].Count != 0)
+{
+  <p>Courses isnt empty</p>
+}
+else{
+  <p>Its empty</p>
+}
+@foreach(var c in Model["courses"])
+{
+  var newGrade = Model["student"].GetGrades(c.GetId());
+  <ul>
+    <li>Course: @c.GetName(), Attendance: @newGrade.GetAttendance(), Grade: @newGrade.GetGrade()</li>
+  </ul>
+}

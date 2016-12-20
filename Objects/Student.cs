@@ -268,7 +268,7 @@ namespace Kickstart
     return allTracks;
   }
 
-  public List<Track> GetCourses()
+  public List<Course> GetCourses()
  {
    SqlConnection conn = DB.Connection();
    conn.Open();
@@ -314,7 +314,7 @@ namespace Kickstart
      }
    }
 
-  public List<Grade> GetGrades(int courseId)
+  public Grade GetGrades(int courseId)
   {
     SqlConnection conn = DB.Connection();
     conn.Open();
@@ -326,21 +326,24 @@ namespace Kickstart
 
     SqlDataReader rdr = cmd.ExecuteReader();
 
-    List<Grade> allGrades = new List<Grade> {};
+    int gradeId = 0;
+    string attendance = null;
+    string grade = null;
     while(rdr.Read())
     {
-      int gradeId = rdr.GetInt32(0);
-      string attendance = rdr.GetString(1);
-      string grade = rdr.GetString(2);
-      Grade newGrade = new Grade(attendance, grade, gradeId);
-      allGrades.Add(newGrade);
+      gradeId = rdr.GetInt32(0);
+      attendance = rdr.GetString(1);
+      grade = rdr.GetString(2);
     }
+
+    Grade newGrade = new Grade(attendance, grade, gradeId);
+
     if (rdr != null)
     {
       rdr.Close();
     }
 
-    return allGrades;
+    return newGrade;
   }
 
   public static void Update(string newFirstName, string newLastName, string newUserName, string newPassword, string address, string newEmail, int id)

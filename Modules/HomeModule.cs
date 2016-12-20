@@ -36,13 +36,14 @@ namespace Kickstart
       };
       Get["/student/details/{id}"] = parameters =>{
         Dictionary<string, object> model = new Dictionary<string, object>{};
-        Student foundStudent = Student.Find(paramters.id);
+        Student foundStudent = Student.Find(parameters.id);
+        foundStudent.AddGrade(newGrade, newCourse.GetId());
         List<Track> tracks = foundStudent.GetTracks();
         List<Course> courses = foundStudent.GetCourses();
         model.Add("student", foundStudent);
         model.Add("tracks", tracks);
         model.Add("courses", courses);
-        return View["student_detail.cshtml", model];
+        return View["student_details.cshtml", model];
       };
 
       // Routes for School Locations Page
