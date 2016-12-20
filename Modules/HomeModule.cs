@@ -1,5 +1,6 @@
 using Nancy;
 using System.Collections.Generic;
+using System.Linq;
 using Kickstart;
 
 namespace Kickstart
@@ -20,10 +21,10 @@ namespace Kickstart
       {
         return View["instructors.cshtml"];
       };
-      Get["/locations"] = _ =>
+      Get["/schools"] = _ =>
       {
         List<School> allSchools = School.GetAll();
-        return View["locations.cshtml", allSchools];
+        return View["schools.cshtml", allSchools];
       };
       Get["/account/create"] = _ =>
       {
@@ -34,24 +35,41 @@ namespace Kickstart
         return View["login.cshtml"];
       };
 
-      // Routes for Locations Page
-      Get["/locations/add"] = _ =>
+      // Routes for School Locations Page
+      Get["/schools/add"] = _ =>
       {
         return View["add_school.cshtml"];
       };
-      Post["/locations/add"] = _ =>
+      Post["/schools/add"] = _ =>
       {
         School newSchool = new School(Request.Form["school-city"], Request.Form["school-address"], Request.Form["school-phone"]);
         newSchool.Save();
         return View["add_school.cshtml", newSchool];
       };
-      Get["/locations/{id}"] = parameters =>
+      Get["/schools/{id}"] = parameters =>
       {
         Dictionary<string, object> myDict = new Dictionary<string, object>{};
         School currentSchool = School.Find(parameters.id);
-        myDict.Add("tracks", School.GetTracks());
-        myDict.Add("instructors", School.GetInstructors());
-        return View["location_details.cshtml"];
+        List<Track> schoolTracks = currentSchool.GetTracks();
+        List<Track> allTracks = Track.GetAll();
+
+        //TODO: Create list of tracks which are not already offered at this particular school, and pass into dictionary. Code was started in the two lines below, but is far from finished.
+        // IEnumerable<Track> availableTracks = allTracks.Where(t => schoolTracks.Contains(t.GetName()) != true);
+        // availableTracks.ToList();
+
+        // Instructor testInstructor = new Instructor("Robert'); DROP TABLE students;--", "bobbytables", "iminursqldb", "string address", "string email");
+        // testInstructor.Save();
+        // currentSchool.AddInstructor(testInstructor);
+
+        // Track newTrack = new Track("Watermelon Demolition");
+        // newTrack.Save();
+        // currentSchool.AddTrack(newTrack);
+
+        myDict.Add("school", currentSchool);
+        myDict.Add("tracks", schoolTracks);
+        myDict.Add("availtracks", availableTracks);
+        myDict.Add("instructors", currentSchool.GetInstructors());
+        return View["school_details.cshtml", myDict];
       };
 
 

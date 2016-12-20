@@ -1,0 +1,59 @@
+@{
+  Layout="Shared/_Layout.cshtml";
+}
+
+<div class="container">
+  <nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+      <ul class="nav navbar-nav">
+        <li><a href="/">Home</a></li>
+        <li><a href="/courses">Courses</a></li>
+        <li><a href="/instructors">Instructors</a></li>
+        <li><a href="/locations">Locations</a></li>
+        <li><a href="/account/create">Create Account</a></li>
+        <li><a href="/account/login">Login</a></li>
+      </ul>
+    </div>
+  </nav>
+</div>
+
+<h3>@Model["school"].GetCity()</h3>
+
+<div class="tracks">
+  @if (Model["tracks"]!=null)
+  {
+    <span>Here are the tracks offered at this school:</span>
+    @foreach (var track in Model["tracks"])
+    {
+      <li>@track.GetName()</li>
+    }
+  }
+  <form class="" action="/tracks/add/" method="post">
+    <label>Add a new track to this school:</label>
+    <input type="hidden" name="school-id" value=@Model["school"].GetId()>
+    <select class="" name="track-id">
+      @foreach (var track in Model["availtracks"])
+      {
+        <option value=@track.GetId()>@track.GetName()</option>
+      }
+    </select>
+    <button type="submit">Add Track</button>
+  </form>
+</div>
+
+<br>
+
+<div class="instructors">
+  @if (Model["instructors"]!=null)
+  {
+      <span>Here are the instructors at this school:</span>
+      @foreach (var instructor in Model["instructors"])
+      {
+        <li>@instructor.GetName()</li>
+      }
+  }
+</div>
+<br>
+<a href="/schools">Return to Schools</a>
+<br>
+<a href="/">Return to Home</a>
