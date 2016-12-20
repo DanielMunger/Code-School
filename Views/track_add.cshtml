@@ -15,18 +15,15 @@
     </div>
   </nav>
 </div>
+
 <div class="container">
-    <h3>Update info for @Model.GetName():</h3>
-    <form action="/track/update/@Model.GetId()" method="post">
+    <h3>Add Track:</h3>
+    <form action="/tracks/add" method="post">
       <div class="form-group">
-        <label for="course-name">First name:</label>
-        <input class="form-control" type="text" name="course-name" value="@Model.GetName()" required>
+        <label for="track-name">Track Name:</label>
+        <input class="form-control" type="text" name="track-name" required>
       </div>
-      <button type="submit" class="btn btn-info">Save</button>
-    </form>
-    <form action="/track/remove/@Model.GetId()" method="post">
-      <input type="hidden" name="track-id" value='@Model.GetId()'>
-      <button type="submit">Delete</button>
+      <button type="submit" class="btn btn-info">Add</button>
     </form>
 
     <a href="/">Return to Home</a>

@@ -12,14 +12,17 @@
       <input type="hidden" name="track-id" value='@track.GetId()'>
       <button type="submit">Edit</button>
     </form>
-    <form action="/track/delete/@track.GetId()" method="post">
-      <input type="hidden" name="track-id" value='@track.GetId()'>
-      <button type="submit">Delete</button>
-    </form>
     <div class="well inline">
       <p>
         Courses:
       </p>
+      @if (track.GetCourses().Count < 3)
+      {
+        <form action="/courses/addto/@track.GetId()" method="get">
+          <input type="hidden" name="track-id" value="@track.GetId()">
+          <button type="submit">Add Course to This Track</button>
+        </form>
+      }
       @foreach(var course in track.GetCourses())
       {
         <span>@course.GetName()</span>
@@ -28,4 +31,6 @@
   </div>
 }
 
+<a href="/tracks/add">Add a Track</a>
+<br>
 <a href="/">Return to Home</a>
