@@ -245,6 +245,16 @@ namespace Kickstart
      }
     }
 
+    public void RemoveACourse(int id)
+    {
+      SqlConnection conn = DB.Connection();
+      conn.Open();
+      SqlCommand cmd = new SqlCommand("DELETE FROM courses_tracks WHERE course_id = @CourseId AND track_id = @TrackId;", conn);
+      cmd.Parameters.AddWithValue("@TrackId", this.GetId());
+      cmd.Parameters.AddWithValue("@CourseId", id);
+      cmd.ExecuteNonQuery();
+      if(conn!=null) conn.Close();
+    }
     public List<Course> GetCourses()
     {
       SqlConnection conn = DB.Connection();
@@ -318,7 +328,7 @@ namespace Kickstart
       conn.Open();
 
       SqlCommand cmd = new SqlCommand((@"DELETE FROM tracks WHERE id = @TrackId;
-                                        
+
                                         DELETE FROM instructors_tracks WHERE id = @TrackId;
                                         DELETE FROM schools_tracks WHERE id = @TrackId;
                                         DELETE FROM students_tracks WHERE id = @TrackId;"), conn);

@@ -236,6 +236,16 @@ namespace Kickstart
         List<Track> allTracks = Track.GetAll();
         return View["tracks.cshtml", allTracks];
       };
+      Post["/course/remove/{course_id}/{track_id}"] = parameters=>
+      {
+        int courseId = parameters.course_id;
+        int trackId = parameters.track_id;
+        Course selectedCourse = Course.Find(courseId);
+        Track selectedTrack = Track.Find(trackId);
+        selectedTrack.RemoveACourse(selectedCourse.GetId());
+        List<Track> allTracks = Track.GetAll();
+        return View["tracks.cshtml", allTracks];
+      };
 
       // Routes for login
       Post["/account/login"] = _ =>

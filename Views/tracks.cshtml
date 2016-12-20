@@ -26,6 +26,11 @@
       @foreach(var course in track.GetCourses())
       {
         <span>@course.GetName()</span>
+        <form action="/course/remove/@course.GetId()/@track.GetId()" method="post">
+          <input type="hidden" name="track-id" >
+          <button type="submit">Remove</button>
+        </form>
+        <!-- <a href="/course/remove/@course.GetId()/@track.GetId()">Remove Course</a> -->
       }
     </div>
   </div>
