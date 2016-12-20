@@ -20,7 +20,8 @@ namespace Kickstart
       };
       Get["/instructors"] = _ =>
       {
-        return View["instructors.cshtml"];
+        List<Instructor> allInstructors = Instructor.GetAll();
+        return View["instructors.cshtml", allInstructors];
       };
       Get["/schools"] = _ =>
       {
