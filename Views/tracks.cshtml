@@ -1,0 +1,23 @@
+@{
+  Layout="Shared/_Layout.cshtml";
+}
+
+<h3>Here are the tracks that we offer:</h3>
+
+@foreach(var track in Model)
+{
+  <div class="well title">
+    <h4 class="embolden">@track.GetName()</h4>
+    <div class="well inline">
+      <p>
+        Courses:
+      </p>
+      @foreach(var course in track.GetCourses())
+      {
+        <span>@course.GetName()</span>
+      }
+    </div>
+  </div>
+}
+
+<a href="/">Return to Home</a>

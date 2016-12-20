@@ -13,9 +13,10 @@ namespace Kickstart
       Get["/"] = _ => {
         return View["index.cshtml"];
       };
-      Get["/courses"] = _ =>
+      Get["/tracks"] = _ =>
       {
-        return View["courses.cshtml"];
+        List<Track> allTracks = Track.GetAll();
+        return View["tracks.cshtml", allTracks];
       };
       Get["/instructors"] = _ =>
       {
@@ -36,13 +37,13 @@ namespace Kickstart
       };
       Get["/student/details/{id}"] = parameters =>{
         Dictionary<string, object> model = new Dictionary<string, object>{};
-        Student foundStudent = Student.Find(paramters.id);
+        Student foundStudent = Student.Find(parameters.id);
         List<Track> tracks = foundStudent.GetTracks();
         List<Course> courses = foundStudent.GetCourses();
         model.Add("student", foundStudent);
         model.Add("tracks", tracks);
         model.Add("courses", courses);
-        return View["student_detail.cshtml", model];
+        return View["student_details.cshtml", model];
       };
 
       // Routes for School Locations Page

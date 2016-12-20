@@ -268,7 +268,7 @@ namespace Kickstart
     return allTracks;
   }
 
-  public List<Track> GetCourses()
+  public List<Course> GetCourses()
  {
    SqlConnection conn = DB.Connection();
    conn.Open();
