@@ -47,6 +47,7 @@ namespace Kickstart
         return View["student_details.cshtml", model];
       };
 
+
       // Routes for School Locations Page
       Get["/schools/add"] = _ =>
       {
@@ -141,6 +142,7 @@ namespace Kickstart
         Student foundStudent = Student.FindByLogin(username, pwd);
         return View["index.cshtml", foundStudent];
       };
+
 
       // Routes for Account Creation
       Post["/account/create"] = _ =>
