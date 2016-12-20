@@ -25,7 +25,18 @@
     <span>Here are the tracks offered at this school:</span>
     @foreach (var track in Model["tracks"])
     {
-      <li>@track.GetName()</li>
+      <li>@track.GetName()
+        <form action="/track/edit/@track.GetId()" method="post">
+          <input type="hidden" name="school-id" value='@Model["school"].GetId()'>
+          <input type="hidden" name="track-id" value='@track.GetId()'>
+          <button type="submit">Edit</button>
+        </form>
+        <form action="/track/delete/@track.GetId()" method="post">
+          <input type="hidden" name="school-id" value='@Model["school"].GetId()'>
+          <input type="hidden" name="track-id" value='@track.GetId()'>
+          <button type="submit">Delete</button>
+        </form>
+      </li>
     }
   }
   @if (Model["availtracks"].Count > 0)
@@ -52,7 +63,18 @@
       <span>Here are the instructors at this school:</span>
       @foreach (var instructor in Model["currentinstructors"])
       {
-        <li>@instructor.GetName()</li>
+        <li>@instructor.GetName()
+          <form action="/instructor/edit/@instructor.GetId()" method="post">
+            <input type="hidden" name="school-id" value='@Model["school"].GetId()'>
+            <input type="hidden" name="instructor-id" value='@instructor.GetId()'>
+            <button type="submit">Edit</button>
+          </form>
+          <form action="/instructor/delete/@instructor.GetId()" method="post">
+            <input type="hidden" name="school-id" value='@Model["school"].GetId()'>
+            <input type="hidden" name="instructor-id" value='@track.GetId()'>
+            <button type="submit">Delete</button>
+          </form>
+        </li>
       }
   }
   @if (Model["availinstructors"].Count > 0)
