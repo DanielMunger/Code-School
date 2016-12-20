@@ -164,6 +164,43 @@ namespace Kickstart
         newStudent.Save();
         return View["index.cshtml"];
       };
+
+      //Routes for deletion
+      Get["/student/delete/{id}"] = parameters =>{
+          Student selectedStudent = Student.Find(parameters.id);
+          return View["student_delete.cshtml", selectedStudent];
+      };
+
+      Post["/student/deleted/{id}"] = parameters =>{
+        Student.RemoveAStudent(parameters.id);
+        return View["index.cshtml"];
+      };
+
+      //Routes for Updating
+      Get["/student/update/{id}"] = parameters =>{
+        Student selectedStudent = Student.Find(parameters.id);
+        return View["student_update.cshtml", selectedStudent];
+      };
+
+      Post["/student/updated/{id}"] = parameters =>{
+        Student selectedStudent = Student.Find(parameters.id);
+        Student.Update(Request.Form["first-name"], Request.Form["last-name"], Request.Form["username"], Request.Form["password"], Request.Form["address"], Request.Form["email"], parameters.id);
+        Dictionary<string, object> model = new Dictionary<string, object>{};
+        Student foundStudent = Student.Find(parameters.id);
+        Track newTrack = foundStudent.GetTrack();
+        List<Course> courses = foundStudent.GetCourses();
+        List<Grade> grades = new List<Grade> {};
+        foreach(Course course in courses)
+        {
+          Grade newGrade = foundStudent.GetGrades(course.GetId());
+          grades.Add(newGrade);
+        }
+        model.Add("student", foundStudent);
+        model.Add("track", newTrack);
+        model.Add("courses", courses);
+        model.Add("grades", grades);
+        return View["student_details.cshtml", model];
+      };
     }
   }
 }

@@ -1,0 +1,27 @@
+@{
+  Layout="Shared/_Layout.cshtml";
+}
+
+<div class="container">
+  <nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+      <ul class="nav navbar-nav">
+        <li><a href="/">Home</a></li>
+        <li><a href="/tracks">Tracks</a></li>
+        <li><a href="/instructors">Instructors</a></li>
+        <li><a href="/schools">Schools</a></li>
+        <li><a href="/account/create">Create Account</a></li>
+        <li><a href="/account/login">Login</a></li>
+      </ul>
+    </div>
+  </nav>
+</div>
+<div class="container">
+  <h2>Are you sure you want to delete this Student?</h2>
+  <br>
+  <h3>@Model.GetLastName(), @Model.GetFirstName()</h3>
+  <form action="/student/deleted/@Model.GetId()" method="post">
+    <button type="submit">Yes</button>
+  </form>
+  <h3><a href="/">No, return home</a></h3>
+</div>

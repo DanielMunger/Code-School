@@ -384,7 +384,7 @@ namespace Kickstart
       SqlConnection conn = DB.Connection();
       conn.Open();
 
-      SqlCommand cmd = new SqlCommand("DELETE FROM students WHERE id = @StudentId;", conn);
+      SqlCommand cmd = new SqlCommand("DELETE FROM students WHERE id = @StudentId; DELETE FROM schools_students WHERE student_id = @StudentId; DELETE FROM students_tracks WHERE student_id = @StudentId; DELETE FROM courses_grades_students WHERE student_id = @StudentId; ", conn);
       cmd.Parameters.AddWithValue("@StudentId", id.ToString());
       SqlDataReader rdr = cmd.ExecuteReader();
 
