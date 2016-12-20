@@ -33,6 +33,10 @@ namespace Kickstart
         return (idEquality && attendanceEquality && gradeEquality);
       }
     }
+    public override int GetHashCode()
+    {
+      return this.GetAttendance().GetHashCode();
+    }
     public int GetId()
     {
       return _id;

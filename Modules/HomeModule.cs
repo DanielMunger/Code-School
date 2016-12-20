@@ -58,8 +58,6 @@ namespace Kickstart
         newSchool.Save();
         return View["add_school.cshtml", newSchool];
       };
-
-
       Get["/schools/{id}"] = parameters =>
       {
         Dictionary<string, object> myDict = new Dictionary<string, object>{};
@@ -70,14 +68,6 @@ namespace Kickstart
         List<Instructor> schoolInstructors = currentSchool.GetInstructors();
         List<Instructor> allInstructors = Instructor.GetAll();
         List<Instructor> displayInstructors = new List<Instructor>{};
-
-        // Track newTrack = new Track("Intro to Clown Cars");
-        // newTrack.Save();
-        // currentSchool.AddTrack(newTrack);
-
-        // Instructor testInstructor = new Instructor("Rowena Fisher", "rfisher", "hp4real", "string address", "string email");
-        // testInstructor.Save();
-        // currentSchool.AddInstructor(testInstructor);
 
         for(int i =0; i < allTracks.Count; i++)
         {
@@ -95,6 +85,44 @@ namespace Kickstart
           }
         }
 
+        myDict.Add("school", currentSchool);
+        myDict.Add("tracks", schoolTracks);
+        myDict.Add("availtracks", displayTracks);
+        myDict.Add("currentinstructors", schoolInstructors);
+        myDict.Add("availinstructors", displayInstructors);
+        return View["school_details.cshtml", myDict];
+      };
+      Post["/tracks/add"] = _ =>
+      {
+        int schoolId = Request.Form["school-id"];
+        int trackId = Request.Form["track-id"];
+        School currentSchool = School.Find(schoolId);
+        Track selectedTrack = Track.Find(trackId);
+        currentSchool.AddTrack(selectedTrack);
+
+        Dictionary<string, object> myDict = new Dictionary<string, object>{};
+        List<Track> schoolTracks = currentSchool.GetTracks();
+        List<Track> allTracks = Track.GetAll();
+        List<Track> displayTracks = new List<Track>{};
+        List<Instructor> schoolInstructors = currentSchool.GetInstructors();
+        List<Instructor> allInstructors = Instructor.GetAll();
+        List<Instructor> displayInstructors = new List<Instructor>{};
+
+        for(int i =0; i < allTracks.Count; i++)
+        {
+          if (schoolTracks.Contains(allTracks[i]) == false)
+          {
+            displayTracks.Add(allTracks[i]);
+          }
+        }
+
+        for(int i =0; i < allInstructors.Count; i++)
+        {
+          if (schoolInstructors.Contains(allInstructors[i]) == false)
+          {
+            displayInstructors.Add(allInstructors[i]);
+          }
+        }
 
         myDict.Add("school", currentSchool);
         myDict.Add("tracks", schoolTracks);
@@ -103,7 +131,6 @@ namespace Kickstart
         myDict.Add("availinstructors", displayInstructors);
         return View["school_details.cshtml", myDict];
       };
-
 
 
       // Routes for login
