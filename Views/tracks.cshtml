@@ -8,6 +8,14 @@
 {
   <div class="well title">
     <h4 class="embolden">@track.GetName()</h4>
+    <form action="/track/edit/@track.GetId()" method="post">
+      <input type="hidden" name="track-id" value='@track.GetId()'>
+      <button type="submit">Edit</button>
+    </form>
+    <form action="/track/delete/@track.GetId()" method="post">
+      <input type="hidden" name="track-id" value='@track.GetId()'>
+      <button type="submit">Delete</button>
+    </form>
     <div class="well inline">
       <p>
         Courses:

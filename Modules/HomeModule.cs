@@ -176,11 +176,19 @@ namespace Kickstart
         myDict.Add("availinstructors", displayInstructors);
         return View["school_details.cshtml", myDict];
       };
+      Get["/track/edit/{id}"] = parameters => {
+        return View["track_edit.cshtml"];
+      };
       Post["/track/edit/{id}"] = parameters => {
         Track selectedTrack = Track.Find(parameters.id);
         return View["track_edit.cshtml", selectedTrack];
       };
-
+      Post["/track/update/{id}"] = parameters => {
+        
+        Track.Update(Request.Form["course-name"], parameters.id);
+        List<Track> allTracks = Track.GetAll();
+        return View["tracks.cshtml", allTracks];
+      };
       //TODO: Build EDIT method for school_details.cshtml Track button
       //TODO: Build EDIT method for school_details.cshtml Instructor button
       //TODO: Build DELETE method for school_details.cshtml Instructor button
