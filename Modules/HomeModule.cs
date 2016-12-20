@@ -176,6 +176,10 @@ namespace Kickstart
         myDict.Add("availinstructors", displayInstructors);
         return View["school_details.cshtml", myDict];
       };
+      Post["/track/edit/{id}"] = parameters => {
+        Track selectedTrack = Track.Find(parameters.id);
+        return View["track_edit.cshtml", selectedTrack];
+      };
 
       //TODO: Build EDIT method for school_details.cshtml Track button
       //TODO: Build EDIT method for school_details.cshtml Instructor button

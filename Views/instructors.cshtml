@@ -1,7 +1,18 @@
 @{
   Layout="Shared/_Layout.cshtml";
 }
-
+<div class="container">
+    <nav class="navbar navbar-inverse">
+      <div class="container-fluid">
+        <ul class="nav navbar-nav">
+          <li><a href="/">Home</a></li>
+          <li><a href="/tracks">Tracks</a></li>
+          <li><a href="/instructors">Instructors</a></li>
+          <li><a href="/schools">Schools</a></li>
+        </ul>
+      </div>
+  </nav>
+</div>
 <h3>Here are our rad instructors:</h3>
 @if(Model.Count > 0)
 {
