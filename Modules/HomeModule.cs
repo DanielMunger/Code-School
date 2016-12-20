@@ -56,31 +56,52 @@ namespace Kickstart
         newSchool.Save();
         return View["add_school.cshtml", newSchool];
       };
-      // Get["/schools/{id}"] = parameters =>
-      // {
-      //   Dictionary<string, object> myDict = new Dictionary<string, object>{};
-      //   School currentSchool = School.Find(parameters.id);
-      //   List<Track> schoolTracks = currentSchool.GetTracks();
-      //   List<Track> allTracks = Track.GetAll();
-      //
-      //   //TODO: Create list of tracks which are not already offered at this particular school, and pass into dictionary. Code was started in the two lines below, but is far from finished.
-      //   // IEnumerable<Track> availableTracks = allTracks.Where(t => schoolTracks.Contains(t.GetName()) != true);
-      //   // availableTracks.ToList();
-      //
-      //   // Instructor testInstructor = new Instructor("Robert'); DROP TABLE students;--", "bobbytables", "iminursqldb", "string address", "string email");
-      //   // testInstructor.Save();
-      //   // currentSchool.AddInstructor(testInstructor);
-      //
-      //   // Track newTrack = new Track("Watermelon Demolition");
-      //   // newTrack.Save();
-      //   // currentSchool.AddTrack(newTrack);
-      //
-      //   myDict.Add("school", currentSchool);
-      //   myDict.Add("tracks", schoolTracks);
-      //   myDict.Add("availtracks", availableTracks);
-      //   myDict.Add("instructors", currentSchool.GetInstructors());
-      //   return View["school_details.cshtml", myDict];
-      // };
+
+
+      Get["/schools/{id}"] = parameters =>
+      {
+        Dictionary<string, object> myDict = new Dictionary<string, object>{};
+        School currentSchool = School.Find(parameters.id);
+        List<Track> schoolTracks = currentSchool.GetTracks();
+        List<Track> allTracks = Track.GetAll();
+        List<Track> displayTracks = new List<Track>{};
+        List<Instructor> schoolInstructors = currentSchool.GetInstructors();
+        List<Instructor> allInstructors = Instructor.GetAll();
+        List<Instructor> displayInstructors = new List<Instructor>{};
+
+        // Track newTrack = new Track("Intro to Clown Cars");
+        // newTrack.Save();
+        // currentSchool.AddTrack(newTrack);
+
+        // Instructor testInstructor = new Instructor("Rowena Fisher", "rfisher", "hp4real", "string address", "string email");
+        // testInstructor.Save();
+        // currentSchool.AddInstructor(testInstructor);
+
+        for(int i =0; i < allTracks.Count; i++)
+        {
+          if (schoolTracks.Contains(allTracks[i]) == false)
+          {
+            displayTracks.Add(allTracks[i]);
+          }
+        }
+
+        for(int i =0; i < allInstructors.Count; i++)
+        {
+          if (schoolInstructors.Contains(allInstructors[i]) == false)
+          {
+            displayInstructors.Add(allInstructors[i]);
+          }
+        }
+
+
+        myDict.Add("school", currentSchool);
+        myDict.Add("tracks", schoolTracks);
+        myDict.Add("availtracks", displayTracks);
+        myDict.Add("currentinstructors", schoolInstructors);
+        myDict.Add("availinstructors", displayInstructors);
+        return View["school_details.cshtml", myDict];
+      };
+
 
 
       // Routes for login
