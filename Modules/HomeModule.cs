@@ -253,6 +253,11 @@ namespace Kickstart
         string username = Request.Form["user-name"];
         string pwd = Request.Form["user-password"];
         Student foundStudent = Student.FindByLogin(username, pwd);
+        if(foundStudent.GetId() == 0)
+        {
+          string error = "Invalid Login";
+          return View["login.cshtml", error];
+        }
         return View["index.cshtml", foundStudent];
       };
 
@@ -285,7 +290,7 @@ namespace Kickstart
       //Routes for Updating
       Get["/student/update/{id}"] = parameters =>{
         Student selectedStudent = Student.Find(parameters.id);
-        return View["student_update.cshtml", selectedStudent];
+        return View["student_edit.cshtml", selectedStudent];
       };
 
       Post["/student/updated/{id}"] = parameters =>{
