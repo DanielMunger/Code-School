@@ -364,7 +364,7 @@ namespace Kickstart
       SqlConnection conn = DB.Connection();
       conn.Open();
 
-      SqlCommand cmd = new SqlCommand("UPDATE students SET first_name = @FirstName, last_name = @LastName, username = @UserName, password = @Password, address = @Address, @Email = email  WHERE id = @StudentId;", conn);
+      SqlCommand cmd = new SqlCommand("UPDATE students SET first_name = @FirstName, last_name = @LastName, username = @UserName, password = @Password, address = @Address, email = @Email  WHERE id = @StudentId;", conn);
 
       cmd.Parameters.AddWithValue("@FirstName", newFirstName);
       cmd.Parameters.AddWithValue("@LastName", newLastName);
