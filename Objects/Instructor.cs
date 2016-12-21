@@ -47,7 +47,7 @@ namespace Kickstart
     {
       return this.GetName().GetHashCode();
     }
-    
+
     public int GetId()
     {
       return _id;
@@ -252,6 +252,20 @@ namespace Kickstart
         rdr.Close();
       }
       if(conn != null)
+      {
+        conn.Close();
+      }
+    }
+
+    public void Remove()
+    {
+      SqlConnection conn = DB.Connection();
+      conn.Open();
+
+      SqlCommand cmd = new SqlCommand("DELETE FROM instructors_schools WHERE instructor_id = @InstructorId;", conn);
+      cmd.Parameters.AddWithValue("@InstructorId", this.GetId());
+      cmd.ExecuteNonQuery();
+      if (conn != null)
       {
         conn.Close();
       }

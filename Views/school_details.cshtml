@@ -64,22 +64,22 @@
       @foreach (var instructor in Model["currentinstructors"])
       {
         <li>@instructor.GetName()
-          <form action="/instructor/edit/@instructor.GetId()" method="post">
+          <form action="/instructor/update/@instructor.GetId()" method="get">
             <input type="hidden" name="school-id" value='@Model["school"].GetId()'>
             <input type="hidden" name="instructor-id" value='@instructor.GetId()'>
-            <button type="submit">Edit</button>
+            <button type="submit">Update</button>
           </form>
-          <form action="/instructor/delete/@instructor.GetId()" method="post">
+          <form action="/instructor/remove/@instructor.GetId()" method="post">
             <input type="hidden" name="school-id" value='@Model["school"].GetId()'>
             <input type="hidden" name="instructor-id" value='@instructor.GetId()'>
-            <button type="submit">Delete</button>
+            <button type="submit">Remove</button>
           </form>
         </li>
       }
   }
   @if (Model["availinstructors"].Count > 0)
   {
-    <form class="" action="/instructors/add/" method="post">
+    <form class="" action="/instructors/addto/" method="post">
       <label>Add a new instructor to this school:</label>
       <input type="hidden" name="school-id" value=@Model["school"].GetId()>
       <select class="" name="instructor-id">

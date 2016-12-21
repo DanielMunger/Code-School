@@ -183,8 +183,86 @@ namespace Kickstart
         Track selectedTrack = Track.Find(parameters.id);
         return View["track_edit.cshtml", selectedTrack];
       };
-      //TODO: Build EDIT method for school_details.cshtml Instructor button
-      //TODO: Build DELETE method for school_details.cshtml Instructor button
+      Post["/instructors/addto"] = _ =>
+      {
+        int schoolId = Request.Form["school-id"];
+        int instructorId = Request.Form["instructor-id"];
+        School currentSchool = School.Find(schoolId);
+        Instructor selectedInstructor = Instructor.Find(instructorId);
+        currentSchool.AddInstructor(selectedInstructor);
+
+        Dictionary<string, object> myDict = new Dictionary<string, object>{};
+        List<Instructor> schoolInstructors = currentSchool.GetInstructors();
+        List<Instructor> allInstructors = Instructor.GetAll();
+        List<Instructor> displayInstructors = new List<Instructor>{};
+        List<Track> schoolTracks = currentSchool.GetTracks();
+        List<Track> allTracks = Track.GetAll();
+        List<Track> displayTracks = new List<Track>{};
+
+        for(int i =0; i < allTracks.Count; i++)
+        {
+          if (schoolTracks.Contains(allTracks[i]) == false)
+          {
+            displayTracks.Add(allTracks[i]);
+          }
+        }
+
+        for(int i =0; i < allInstructors.Count; i++)
+        {
+          if (schoolInstructors.Contains(allInstructors[i]) == false)
+          {
+            displayInstructors.Add(allInstructors[i]);
+          }
+        }
+
+        myDict.Add("school", currentSchool);
+        myDict.Add("tracks", schoolTracks);
+        myDict.Add("availtracks", displayTracks);
+        myDict.Add("currentinstructors", schoolInstructors);
+        myDict.Add("availinstructors", displayInstructors);
+        return View["school_details.cshtml", myDict];
+      };
+      Get["/instructor/update/{id}"] = parameters =>
+      {
+        Instructor selectedInstructor = Instructor.Find(parameters.id);
+        return View["instructor_edit.cshtml", selectedInstructor];
+      };
+      Post["/instructor/remove/{id}"] = parameters =>
+      {
+        Instructor selectedInstructor = Instructor.Find(parameters.id);
+        selectedInstructor.Remove();
+        Dictionary<string, object> myDict = new Dictionary<string, object>{};
+        School currentSchool = School.Find(Request.Form["school-id"]);
+        List<Track> schoolTracks = currentSchool.GetTracks();
+        List<Track> allTracks = Track.GetAll();
+        List<Track> displayTracks = new List<Track>{};
+        List<Instructor> schoolInstructors = currentSchool.GetInstructors();
+        List<Instructor> allInstructors = Instructor.GetAll();
+        List<Instructor> displayInstructors = new List<Instructor>{};
+
+        for(int i =0; i < allTracks.Count; i++)
+        {
+          if (schoolTracks.Contains(allTracks[i]) == false)
+          {
+            displayTracks.Add(allTracks[i]);
+          }
+        }
+
+        for(int i =0; i < allInstructors.Count; i++)
+        {
+          if (schoolInstructors.Contains(allInstructors[i]) == false)
+          {
+            displayInstructors.Add(allInstructors[i]);
+          }
+        }
+
+        myDict.Add("school", currentSchool);
+        myDict.Add("tracks", schoolTracks);
+        myDict.Add("availtracks", displayTracks);
+        myDict.Add("currentinstructors", schoolInstructors);
+        myDict.Add("availinstructors", displayInstructors);
+        return View["school_details.cshtml", myDict];
+      };
 
 
       //Routes for Tracks
@@ -329,6 +407,13 @@ namespace Kickstart
         model.Add("courses", courses);
         model.Add("grades", grades);
         return View["student_details.cshtml", model];
+      };
+
+      Post["/instructor/update/{id}"] = parameters =>
+      {
+        Instructor selectedInstructor = Instructor.Find(parameters.id);
+        Instructor.Update(Request.Form["name"], Request.Form["username"], Request.Form["password"], Request.Form["address"], Request.Form["email"], parameters.id);
+        return View["index.cshtml"];
       };
     }
   }
