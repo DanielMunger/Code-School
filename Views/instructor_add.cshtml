@@ -2,15 +2,11 @@
   Layout="Shared/_Layout.cshtml";
 }
 
-<h3>Make an account:</h3>
-<form action="/account/create" method="post">
+<h3>Add an instructor:</h3>
+<form action="/instructor/create" method="post">
   <div class="form-group">
-    <label for="first-name">Enter your first name:</label>
-    <input class="form-control" type="text" name="first-name">
-  </div>
-  <div class="form-group">
-    <label for="last-name">Enter your last name:</label>
-    <input class="form-control" type="text" name="last-name">
+    <label for="name">Enter your name:</label>
+    <input class="form-control" type="text" name="name">
   </div>
   <div class="form-group">
     <label for="username">Enter your desired username:</label>

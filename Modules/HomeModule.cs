@@ -360,22 +360,23 @@ namespace Kickstart
         string newName = Request.Form["course-name"];
         Track selectedTrack = Track.Find(Request.Form["track-id"]);
         List<Track> allTracks = Track.GetAll();
+        List<Course> allCourses = Course.GetAll();
 
         bool Exists = false;
-        foreach (Track track in allTracks)
+        foreach (Course course in allCourses)
         {
-          if (newName.ToLower() == track.GetName().ToLower())
+          if (newName.ToLower() == course.GetName().ToLower())
           {
             Exists = true;
           }
         }
 
-        if (Exists)
+        if (!Exists)
         {
           Course newCourse = new Course(newName);
           newCourse.Save();
           selectedTrack.AddCourse(newCourse);
-        }
+         }
 
         return View["tracks.cshtml", allTracks];
       };
@@ -427,6 +428,22 @@ namespace Kickstart
         Student newStudent = new Student(firstName, lastName, userName, password, address, email);
         newStudent.Save();
         return View["index.cshtml"];
+      };
+
+      Get["/instructor/create"] = _ =>{
+        return View["instructor_add.cshtml"];
+      };
+      Post["/instructor/create"] = _ =>
+      {
+        string name = Request.Form["name"];
+        string userName = Request.Form["username"];
+        string password = Request.Form["password"];
+        string address = Request.Form["address"];
+        string email = Request.Form["email"];
+        Instructor newInstructor = new Instructor(name, userName, password, address, email);
+        newInstructor.Save();
+        List<Instructor> allInstructors = Instructor.GetAll();
+        return View["instructors.cshtml", allInstructors];
       };
 
       //Routes for deletion

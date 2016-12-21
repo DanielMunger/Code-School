@@ -27,6 +27,8 @@
       <button type="submit" class="btn btn-info">Add</button>
     </form>
 
+    @if (Model.Count > 0)
+    {
     <form action="/courses/addexisting" method="post">
       <input type="hidden" name="track-id" value='@Model["currenttrack"].GetId()'>
       <select name="course-id">
@@ -37,5 +39,6 @@
       </select>
       <button type="submit" class="btn btn-info">Add</button>
     </form>
+    }
     <a href="/">Return to Home</a>
 </div>
