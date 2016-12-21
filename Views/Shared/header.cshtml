@@ -5,6 +5,10 @@
       <li><a href="/tracks">Tracks</a></li>
       <li><a href="/instructors">Instructors</a></li>
       <li><a href="/schools">Schools</a></li>
+      @if(Request.Cookies.ContainsKey("name"))
+      {
+        <li><a>Hello @Request.Cookies["name"]</a></li>
+      }
       <li><a href="/account/logout">Logout</a></li>
     </ul>
   </div>

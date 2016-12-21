@@ -1,4 +1,5 @@
 using Nancy;
+using Nancy.Cookies;
 using System.Collections.Generic;
 using System.Linq;
 using Kickstart;
@@ -6,6 +7,7 @@ using System;
 
 namespace Kickstart
 {
+
   public class HomeModule : NancyModule
   {
     public HomeModule()
@@ -13,6 +15,7 @@ namespace Kickstart
       Get["/"] = _ =>{
         return View["index.cshtml"];
       };
+      //Request.Cookies["test"]
       // Routes for Landing Page Navbar
       Get["/main"] = _ => {
         return View["main.cshtml"];
@@ -418,11 +421,18 @@ namespace Kickstart
           string error = "Invalid Login";
           return View["login.cshtml", error];
         }
-        return View["main.cshtml", foundStudent];
+        NancyCookie newCookie = new NancyCookie("name", foundStudent.GetUserName());
+        return View["main.cshtml", foundStudent].WithCookie(newCookie);
       };
 
       Get["/account/logout"] = _ =>
       {
+        if (Request.Cookies["name"] != null)
+        {
+            NancyCookie newCookie = new NancyCookie("name", "");
+            newCookie.Expires = DateTime.Now.AddDays(-1d);
+            return View["index.cshtml"].WithCookie(newCookie);
+        }
         return View["index.cshtml"];
       };
 
@@ -438,7 +448,8 @@ namespace Kickstart
         string email = Request.Form["email"];
         Student newStudent = new Student(firstName, lastName, userName, password, address, email);
         newStudent.Save();
-        return View["main.cshtml"];
+        NancyCookie newCookie = new NancyCookie("name", newStudent.GetUserName());
+        return View["main.cshtml"].WithCookie(newCookie);
       };
 
       Get["/instructor/create"] = _ =>{
