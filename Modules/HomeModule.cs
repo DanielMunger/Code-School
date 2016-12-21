@@ -475,6 +475,7 @@ namespace Kickstart
         Dictionary<string, object> model = new Dictionary<string, object>{};
         Student foundStudent = Student.Find(parameters.id);
         Track newTrack = foundStudent.GetTrack();
+        List<Track> allTracks = Track.GetAll();
         List<Course> courses = foundStudent.GetCourses();
         List<Grade> grades = new List<Grade> {};
         foreach(Course course in courses)
@@ -486,6 +487,7 @@ namespace Kickstart
         model.Add("track", newTrack);
         model.Add("courses", courses);
         model.Add("grades", grades);
+        model.Add("availtracks", allTracks);
         return View["student_details.cshtml", model];
       };
 
