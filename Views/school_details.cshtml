@@ -17,30 +17,34 @@
   </nav>
 </div>
 
-<h3>@Model["school"].GetCity()</h3>
+<h3 class="well school-title">Tracks Offered in @Model["school"].GetCity()</h3>
 
 <div class="tracks">
   @if (Model["tracks"]!=null)
   {
-    <span>Here are the tracks offered at this school:</span>
     @foreach (var track in Model["tracks"])
     {
-      <li>@track.GetName()
-        <form action="/student/tracks/@track.GetId()" method="get">
-          <input type="hidden" name="track-id" value='@track.GetId()'>
-          <button type="submit">View All Students</button>
-        </form>
-        <form action="/tracks" method="get">
-          <input type="hidden" name="school-id" value='@Model["school"].GetId()'>
-          <input type="hidden" name="track-id" value='@track.GetId()'>
-          <button type="submit">Edit</button>
-        </form>
-        <form action="/track/delete/@track.GetId()" method="post">
-          <input type="hidden" name="school-id" value='@Model["school"].GetId()'>
-          <input type="hidden" name="track-id" value='@track.GetId()'>
-          <button type="submit">Delete</button>
-        </form>
-      </li>
+      <div class="row">
+        <div class="col-md-8">
+          <li class="track-names">Track: @track.GetName()</li>
+        </div>
+        <div class="col-md-4">
+          <form class="track-buttons" action="/track/delete/@track.GetId()" method="post">
+            <input type="hidden" name="school-id" value='@Model["school"].GetId()'>
+            <input type="hidden" name="track-id" value='@track.GetId()'>
+            <button type="submit">Delete</button>
+          </form>
+          <form class="track-buttons" action="/tracks" method="get">
+            <input type="hidden" name="school-id" value='@Model["school"].GetId()'>
+            <input type="hidden" name="track-id" value='@track.GetId()'>
+            <button type="submit">Edit</button>
+          </form>
+          <form class="track-buttons" action="/student/tracks/@track.GetId()" method="get">
+            <input type="hidden" name="track-id" value='@track.GetId()'>
+            <button type="submit">View All Students</button>
+          </form>
+        </div>
+      </div>
     }
   }
   @if (Model["availtracks"].Count > 0)
@@ -61,29 +65,35 @@
 
 <br>
 
-<div class="instructors">
+<h3 class="well school-title">Instructors in @Model["school"].GetCity()</h3>
+<div class="tracks">
   @if (Model["currentinstructors"]!=null)
   {
-      <span>Here are the instructors at this school:</span>
       @foreach (var instructor in Model["currentinstructors"])
       {
-        <li>@instructor.GetName()
-          <form action="/instructor/update/@instructor.GetId()" method="get">
-            <input type="hidden" name="school-id" value='@Model["school"].GetId()'>
-            <input type="hidden" name="instructor-id" value='@instructor.GetId()'>
-            <button type="submit">Update</button>
-          </form>
-          <form action="/instructor/remove/@instructor.GetId()" method="post">
-            <input type="hidden" name="school-id" value='@Model["school"].GetId()'>
-            <input type="hidden" name="instructor-id" value='@instructor.GetId()'>
-            <button type="submit">Remove</button>
-          </form>
-        </li>
+        <div class="row">
+          <div class="col-md-8">
+            <li class="track-names">@instructor.GetName()</li>
+          </div>
+          <div class="col-md-4">
+            <form class="track-buttons" action="/instructor/remove/@instructor.GetId()" method="post">
+              <input type="hidden" name="school-id" value='@Model["school"].GetId()'>
+              <input type="hidden" name="instructor-id" value='@instructor.GetId()'>
+              <button type="submit">Remove</button>
+            </form>
+            <form class="track-buttons" action="/instructor/update/@instructor.GetId()" method="get">
+              <input type="hidden" name="school-id" value='@Model["school"].GetId()'>
+              <input type="hidden" name="instructor-id" value='@instructor.GetId()'>
+              <button type="submit">Update</button>
+            </form>
+          </div>
+        </div>
+
       }
   }
   @if (Model["availinstructors"].Count > 0)
   {
-    <form class="" action="/instructors/addto/" method="post">
+    <form class="add-instructor-select" action="/instructors/addto/" method="post">
       <label>Add a new instructor to this school:</label>
       <input type="hidden" name="school-id" value=@Model["school"].GetId()>
       <select class="" name="instructor-id">
@@ -97,6 +107,6 @@
   }
 </div>
 <br>
-<a href="/schools">Return to Schools</a>
-<br>
-<a href="/main">Return to Home</a>
+<button id="return-to-school-button"><a href="/schools">Return to Schools</a></button>
+
+<button><a href="/main">Return to Home</a></button>
