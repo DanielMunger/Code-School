@@ -27,7 +27,6 @@ namespace Kickstart
       //HASHING
       byte[] hash = PBKDF2(password, salt, PBKDF2_ITERATIONS, HASH_BYTES);
 
-      // format: algorithm:iterations:hashSize:salt:hash
       String parts = "sha1:" +
           PBKDF2_ITERATIONS +
           ":" +
@@ -43,103 +42,20 @@ namespace Kickstart
         {
             char[] delimiter = { ':' };
             string[] split = goodHash.Split(delimiter);
-
-            // if (split.Length != HASH_SECTIONS) {
-            //     throw new InvalidHashException(
-            //         "Fields are missing from the password hash."
-            //     );
-            // }
-
-            // // We only support SHA1 with C#.
-            // if (split[HASH_ALGORITHM_INDEX] != "sha1") {
-            //     throw new CannotPerformOperationException(
-            //         "Unsupported hash type."
-            //     );
-            // }
-
             int iterations = 0;
-            //try {
-            iterations = Int32.Parse(split[ITERATION_INDEX]);
-            // } catch (ArgumentNullException ex) {
-            //     throw new CannotPerformOperationException(
-            //         "Invalid argument given to Int32.Parse",
-            //         ex
-            //     );
-            // } catch (FormatException ex) {
-            //     throw new InvalidHashException(
-            //         "Could not parse the iteration count as an integer.",
-            //         ex
-            //     );
-            // } catch (OverflowException ex) {
-            //     throw new InvalidHashException(
-            //         "The iteration count is too large to be represented.",
-            //         ex
-            //     );
-            // }
 
-            // if (iterations < 1) {
-            //     throw new InvalidHashException(
-            //         "Invalid number of iterations. Must be >= 1."
-            //     );
-            // }
+            iterations = Int32.Parse(split[ITERATION_INDEX]);
 
             byte[] salt = null;
-            //try {
+
             salt = Convert.FromBase64String(split[SALT_INDEX]);
-            //}
-            // catch (ArgumentNullException ex) {
-            //     throw new CannotPerformOperationException(
-            //         "Invalid argument given to Convert.FromBase64String",
-            //         ex
-            //     );
-            // } catch (FormatException ex) {
-            //     throw new InvalidHashException(
-            //         "Base64 decoding of salt failed.",
-            //         ex
-            //     );
-            // }
 
             byte[] hash = null;
-            //try {
-                hash = Convert.FromBase64String(split[PBKDF2_INDEX]);
-            // }
-            // catch (ArgumentNullException ex) {
-            //     throw new CannotPerformOperationException(
-            //         "Invalid argument given to Convert.FromBase64String",
-            //         ex
-            //     );
-            // } catch (FormatException ex) {
-            //     throw new InvalidHashException(
-            //         "Base64 decoding of pbkdf2 output failed.",
-            //         ex
-            //     );
-            // }
 
+            hash = Convert.FromBase64String(split[PBKDF2_INDEX]);
             int storedHashSize = 0;
-          //  try {
-                storedHashSize = Int32.Parse(split[HASH_SIZE_INDEX]);
-            //} catch (ArgumentNullException ex) {
-            //     throw new CannotPerformOperationException(
-            //         "Invalid argument given to Int32.Parse",
-            //         ex
-            //     );
-            // } catch (FormatException ex) {
-            //     throw new InvalidHashException(
-            //         "Could not parse the hash size as an integer.",
-            //         ex
-            //     );
-            // } catch (OverflowException ex) {
-            //     throw new InvalidHashException(
-            //         "The hash size is too large to be represented.",
-            //         ex
-            //     );
-            // }
 
-            // if (storedHashSize != hash.Length) {
-            //     throw new InvalidHashException(
-            //         "Hash length doesn't match stored hash length."
-            //     );
-            // }
+            storedHashSize = Int32.Parse(split[HASH_SIZE_INDEX]);
 
             byte[] testHash = PBKDF2(password, salt, iterations, hash.Length);
             return SlowEquals(hash, testHash);
