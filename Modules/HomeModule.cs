@@ -2,6 +2,7 @@ using Nancy;
 using System.Collections.Generic;
 using System.Linq;
 using Kickstart;
+using System;
 
 namespace Kickstart
 {
@@ -81,7 +82,9 @@ namespace Kickstart
 
       Post["/student/update-grade"] = _ =>{
         Student foundStudent = Student.Find(Request.Form["student-id"]);
-        Grade.Update(Request.Form["attendance"], Request.Form["grade"], Request.Form["student-id"], Request.Form["course-id"]);
+        int studentId =(Request.Form["student-id"]);
+        int courseId = (Request.Form["course-id"]);
+        Grade.Update(Request.Form["attendance"], Request.Form["grade"], studentId, courseId);
         Dictionary<string, object> model = new Dictionary<string, object>{};
         List<Track> allTracks = Track.GetAll();
         Track newTrack = foundStudent.GetTrack();

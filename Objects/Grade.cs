@@ -137,66 +137,13 @@ namespace Kickstart
       return newGrade;
     }
 
-  //   public void AddVenue(Venue newVenue)
-  //  {
-  //    SqlConnection conn = DB.Connection();
-  //    conn.Open();
-   //
-  //    SqlCommand cmd = new SqlCommand("INSERT INTO tracks_venues (school_id, venue_id) VALUES (@GradeId, @VenueId);", conn);
-   //
-  //    SqlParameter schoolIdParameter = new SqlParameter();
-  //    schoolIdParameter.ParameterName = "@GradeId";
-  //    schoolIdParameter.Value = this.GetId();
-  //    cmd.Parameters.Add(schoolIdParameter);
-   //
-  //    SqlParameter venueIdParameter = new SqlParameter();
-  //    venueIdParameter.ParameterName = "@VenueId";
-  //    venueIdParameter.Value = newVenue.GetId();
-  //    cmd.Parameters.Add(venueIdParameter);
-   //
-  //    cmd.ExecuteNonQuery();
-   //
-  //    if(conn!= null)
-  //    {
-  //      conn.Close();
-  //    }
-  //  }
-  //
-  //  public List<Venue> GetVenues()
-  // {
-  //   SqlConnection conn = DB.Connection();
-  //   conn.Open();
-  //
-  //   SqlCommand cmd = new SqlCommand("SELECT venues.* FROM venues JOIN tracks_venues ON (tracks_venues.venue_id = venues.id) JOIN tracks ON (tracks.id = tracks_venues.school_id) WHERE school_id = @GradeId;", conn);
-  //   SqlParameter schoolIdParameter = new SqlParameter();
-  //   schoolIdParameter.ParameterName = "@GradeId";
-  //   schoolIdParameter.Value = this.GetId();
-  //   cmd.Parameters.Add(schoolIdParameter);
-  //   SqlDataReader rdr = cmd.ExecuteReader();
-  //
-  //   List<Venue> allVenues = new List<Venue> {};
-  //   while(rdr.Read())
-  //   {
-  //     int venueId = rdr.GetInt32(0);
-  //     string venueName = rdr.GetString(1);
-  //     string venueattendance = rdr.GetString(2);
-  //     Venue newVenue = new Venue(venueName, venueattendance, venueId);
-  //     allVenues.Add(newVenue);
-  //   }
-  //   if (rdr != null)
-  //   {
-  //     rdr.Close();
-  //   }
-  //
-  //   return allVenues;
-  // }
 
-  public static void Update(string newAttendance, string newGrade, int studentId, int courseId)
+    public static void Update(string newAttendance, string newGrade, int studentId, int courseId)
     {
       SqlConnection conn = DB.Connection();
       conn.Open();
 
-      SqlCommand cmd = new SqlCommand("UPDATE grades SET attendance = @Attendance, grade = @Grade WHERE student_id = @StudentId AND course_id = @CourseId;", conn);
+      SqlCommand cmd = new SqlCommand("UPDATE grades SET attendance = @Attendance, grade = @Grade FROM grades JOIN courses_grades_students ON (courses_grades_students.grade_id = grades.id) WHERE student_id = @StudentId AND course_id = @CourseId;", conn);
 
       cmd.Parameters.AddWithValue("@Attendance", newAttendance);
       cmd.Parameters.AddWithValue("@Grade", newGrade);

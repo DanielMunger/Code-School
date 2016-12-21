@@ -20,7 +20,8 @@
     <li>User Name: @Model["student"].GetUserName()</li>
     <li>Address: @Model["student"].GetAddress()</li>
     <li>Email: @Model["student"].GetEmail()</li>
-    <li>Current Track: @Model["track"].GetName()
+    <li>Current Track: @Model["track"].GetName()</li>
+  </ul>
       <form action="/student/add-track" method="post">
         <label>Add a new track to this student:</label>
         <input type="hidden" name="student-id" value=@Model["student"].GetId()>
@@ -35,13 +36,11 @@
       <ul><h3>Courses and grades</h3>
       @for (var i = 0; i < Model["courses"].Count; i++)
       {
-            <li>@Model["courses"][i].GetName()</li>
-          </li>
-        </ul>
+            <li>Course: @Model["courses"][i].GetName()</li>
       </ul>
       <form action="/student/update-grade" method="post">
-        <input type="hidden" name="course-id" value="course.GetId()">
-        <input type="hidden" name="student-id" value=@Model["student"].GetId()>
+        <input type="hidden" name="course-id" value='@Model["courses"][i].GetId()'>
+        <input type="hidden" name="student-id" value='@Model["student"].GetId()'>
         <div class="form-group">
           <label for="attendance">Attendance:</label>
           <input class="form-control" type="text" name="attendance" value='@Model["grades"][i].GetAttendance()' required>
