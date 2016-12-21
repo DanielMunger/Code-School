@@ -40,17 +40,18 @@
         </ul>
       </ul>
       <form action="/student/update-grade" method="post">
-      <input type="hidden" name="course-id" value="course.GetId()">
-      <input type="hidden" name="student-id" value=@Model["student"].GetId()>
+        <input type="hidden" name="course-id" value="course.GetId()">
+        <input type="hidden" name="student-id" value=@Model["student"].GetId()>
         <div class="form-group">
           <label for="attendance">Attendance:</label>
-          <input class="form-control" type="text" name="attendance" value="@Model[grades].GetAttendance()" required>
+          <input class="form-control" type="text" name="attendance" value='@Model["grades"][i].GetAttendance()' required>
         </div>
         <div class="form-group">
           <label for="last-name">Grade:</label>
-          <input class="form-control" type="text" name="grade" value="@Model[grade].GetGrade()" required>
+          <input class="form-control" type="text" name="grade" value='@Model["grades"][i].GetGrade()' required>
         </div>
         <button type="submit">Update Grade</button>
+      </form>
       }
   <h4><a href='/student/delete/@Model["student"].GetId()'>Delete this student</a></h4>
   <h4><a href='/student/update/@Model["student"].GetId()'>Update Student Info</a></h4>

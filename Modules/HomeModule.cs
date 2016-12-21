@@ -81,7 +81,7 @@ namespace Kickstart
 
       Post["/student/update-grade"] = _ =>{
         Student foundStudent = Student.Find(Request.Form["student-id"]);
-        Grade.Update(Request.Form["attendance"], Request.Form["grade"], Request.Form["student-id"], Request.Form["course-id"]);
+        Grade.Update(Request.Form["attendance"], Request.Form["grade"], Parse.Int32(Request.Form["student-id"]), Parse.Int32(Request.Form["course-id"]));
         Dictionary<string, object> model = new Dictionary<string, object>{};
         List<Track> allTracks = Track.GetAll();
         Track newTrack = foundStudent.GetTrack();
