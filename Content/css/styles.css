@@ -62,6 +62,16 @@ font-family: lato;
   font-weight: bold;
   color: #767676;
 }
+#course-label{
+  font-size: 18px;
+  font-weight: bold;
+  color: #767676;
+}
+#track-label{
+  font-size: 18px;
+  font-weight: bold;
+  color: black;
+}
 
 #grades-title{
   padding: 50px 0 50px 0;
@@ -102,4 +112,49 @@ margin-top: 30px;
 .track-buttons{
   float: right;
   padding-top: 25px;
+}
+
+.courses-tracks{
+  padding-left: 11.5%;
+  margin-bottom: 0px;
+}
+.courses-tracks-2{
+  padding-left: 11.5%;
+  margin-bottom: 40px;
+  padding-bottom: 25px;
+  border-bottom: 2px solid black;
+}
+.add-course-button{
+  margin-left: 35%;
+  margin-top: 10px;
+}
+
+.courses-tracks-buttons {
+  margin-top: 5px;
+}
+
+.course-names{
+  font-size: 20px;
+  padding-top: 0px;
+
+  width: 80%;
+  border-bottom: 1px #29a7e1 solid;
+}
+
+.track-title{
+  background-color: #29a7e1;
+  color: white;
+  width: 80%;
+  margin: auto;
+  margin-top: 50px;
+}
+
+.edit-track {
+  font-size: .8em;
+  text-align: right;
+  color: black;
+}
+
+#track-page-title{
+  text-align: center;
 }
