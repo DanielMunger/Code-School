@@ -418,6 +418,22 @@ namespace Kickstart
         return View["index.cshtml"];
       };
 
+      Get["/instructor/create"] = _ =>{
+        return View["instructor_add.cshtml"];
+      };
+      Post["/instructor/create"] = _ =>
+      {
+        string name = Request.Form["name"];
+        string userName = Request.Form["username"];
+        string password = Request.Form["password"];
+        string address = Request.Form["address"];
+        string email = Request.Form["email"];
+        Instructor newInstructor = new Instructor(name, userName, password, address, email);
+        newInstructor.Save();
+        List<Instructor> allInstructors = Instructor.GetAll();
+        return View["instructors.cshtml", allInstructors];
+      };
+
       //Routes for deletion
       Get["/student/delete/{id}"] = parameters =>{
           Student selectedStudent = Student.Find(parameters.id);
