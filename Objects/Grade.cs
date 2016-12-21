@@ -191,16 +191,17 @@ namespace Kickstart
   //   return allVenues;
   // }
 
-  public static void Update(string newAttendance, string newGrade, int id)
+  public static void Update(string newAttendance, string newGrade, int studentId, int courseId)
     {
       SqlConnection conn = DB.Connection();
       conn.Open();
 
-      SqlCommand cmd = new SqlCommand("UPDATE grades SET attendance = @Attendance, grade = @Grade WHERE id = @GradeId;", conn);
+      SqlCommand cmd = new SqlCommand("UPDATE grades SET attendance = @Attendance, grade = @Grade WHERE student_id = @StudentId AND course_id = @CourseId;", conn);
 
       cmd.Parameters.AddWithValue("@Attendance", newAttendance);
       cmd.Parameters.AddWithValue("@Grade", newGrade);
-      cmd.Parameters.AddWithValue("@GradeId", id.ToString());
+      cmd.Parameters.AddWithValue("@StudentId", studentId.ToString());
+      cmd.Parameters.AddWithValue("@CourseId", courseId.ToString());
 
       SqlDataReader rdr = cmd.ExecuteReader();
 

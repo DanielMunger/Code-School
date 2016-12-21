@@ -79,6 +79,26 @@ namespace Kickstart
         return View["student_details.cshtml", model];
       };
 
+      Post["/student/update-grade"] = _ =>{
+        Student foundStudent = Student.Find(Request.Form["student-id"]);
+        Grade.Update(Request.Form["attendance"], Request.Form["grade"], Request.Form["student-id"], Request.Form["course-id"]);
+        Dictionary<string, object> model = new Dictionary<string, object>{};
+        List<Track> allTracks = Track.GetAll();
+        Track newTrack = foundStudent.GetTrack();
+        List<Course> courses = foundStudent.GetCourses();
+        List<Grade> grades = new List<Grade> {};
+        foreach(Course course in courses)
+        {
+          Grade newGrade = foundStudent.GetGrades(course.GetId());
+          grades.Add(newGrade);
+        }
+        model.Add("student", foundStudent);
+        model.Add("track", newTrack);
+        model.Add("courses", courses);
+        model.Add("grades", grades);
+        model.Add("availtracks", allTracks);
+        return View["student_details.cshtml", model];
+      };
 
       // Routes for School Locations Page
       Get["/schools/add"] = _ =>
