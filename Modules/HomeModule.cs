@@ -10,9 +10,15 @@ namespace Kickstart
   {
     public HomeModule()
     {
-      // Routes for Landing Page Navbar
-      Get["/"] = _ => {
+      Get["/"] = _ =>{
         return View["index.cshtml"];
+      };
+      // Routes for Landing Page Navbar
+      Get["/main"] = _ => {
+        return View["main.cshtml"];
+      };
+      Get["/splash"] = _ =>{
+        return View["splash.cshtml"];
       };
       Get["/tracks"] = _ =>
       {
@@ -412,7 +418,7 @@ namespace Kickstart
           string error = "Invalid Login";
           return View["login.cshtml", error];
         }
-        return View["index.cshtml", foundStudent];
+        return View["main.cshtml", foundStudent];
       };
 
 
@@ -427,7 +433,7 @@ namespace Kickstart
         string email = Request.Form["email"];
         Student newStudent = new Student(firstName, lastName, userName, password, address, email);
         newStudent.Save();
-        return View["index.cshtml"];
+        return View["main.cshtml"];
       };
 
       Get["/instructor/create"] = _ =>{
@@ -454,7 +460,7 @@ namespace Kickstart
 
       Post["/student/deleted/{id}"] = parameters =>{
         Student.RemoveAStudent(parameters.id);
-        return View["index.cshtml"];
+        return View["main.cshtml"];
       };
 
       //Routes for Updating
@@ -487,7 +493,7 @@ namespace Kickstart
       {
         Instructor selectedInstructor = Instructor.Find(parameters.id);
         Instructor.Update(Request.Form["name"], Request.Form["username"], Request.Form["password"], Request.Form["address"], Request.Form["email"], parameters.id);
-        return View["index.cshtml"];
+        return View["main.cshtml"];
       };
     }
   }
