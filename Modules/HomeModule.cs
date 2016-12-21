@@ -36,9 +36,54 @@ namespace Kickstart
       {
         return View["login.cshtml"];
       };
+      //Student Details routing
       Get["/student/details/{id}"] = parameters =>{
         Dictionary<string, object> model = new Dictionary<string, object>{};
         Student foundStudent = Student.Find(parameters.id);
+        Track newTrack = foundStudent.GetTrack();
+        List<Track> allTracks = Track.GetAll();
+        List<Course> courses = foundStudent.GetCourses();
+        List<Grade> grades = new List<Grade> {};
+        foreach(Course course in courses)
+        {
+          Grade newGrade = foundStudent.GetGrades(course.GetId());
+          grades.Add(newGrade);
+        }
+        model.Add("student", foundStudent);
+        model.Add("track", newTrack);
+        model.Add("courses", courses);
+        model.Add("grades", grades);
+        model.Add("availtracks", allTracks);
+        return View["student_details.cshtml", model];
+      };
+
+      Post["/student/add-track"] =_=>{
+        Student foundStudent = Student.Find(Request.Form["student-id"]);
+        foundStudent.DeleteTrackFromStudent();
+        Track selectedTrack = Track.Find(Request.Form["track-id"]);
+        foundStudent.AddTrack(selectedTrack);
+        Dictionary<string, object> model = new Dictionary<string, object>{};
+        List<Track> allTracks = Track.GetAll();
+        List<Course> courses = foundStudent.GetCourses();
+        List<Grade> grades = new List<Grade> {};
+        foreach(Course course in courses)
+        {
+          Grade newGrade = foundStudent.GetGrades(course.GetId());
+          grades.Add(newGrade);
+        }
+        model.Add("student", foundStudent);
+        model.Add("track", selectedTrack);
+        model.Add("courses", courses);
+        model.Add("grades", grades);
+        model.Add("availtracks", allTracks);
+        return View["student_details.cshtml", model];
+      };
+
+      Post["/student/update-grade"] = _ =>{
+        Student foundStudent = Student.Find(Request.Form["student-id"]);
+        Grade.Update(Request.Form["attendance"], Request.Form["grade"], Parse.Int32(Request.Form["student-id"]), Parse.Int32(Request.Form["course-id"]));
+        Dictionary<string, object> model = new Dictionary<string, object>{};
+        List<Track> allTracks = Track.GetAll();
         Track newTrack = foundStudent.GetTrack();
         List<Course> courses = foundStudent.GetCourses();
         List<Grade> grades = new List<Grade> {};
@@ -51,9 +96,9 @@ namespace Kickstart
         model.Add("track", newTrack);
         model.Add("courses", courses);
         model.Add("grades", grades);
+        model.Add("availtracks", allTracks);
         return View["student_details.cshtml", model];
       };
-
 
       // Routes for School Locations Page
       Get["/schools/add"] = _ =>

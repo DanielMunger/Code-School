@@ -233,6 +233,13 @@ namespace Kickstart
      SqlConnection conn = DB.Connection();
      conn.Open();
 
+     List<Course> allCourses = newTrack.GetCourses();
+     foreach(Course course in allCourses){
+       Grade newGrade = new Grade("100", "A");
+       newGrade.Save();
+       this.AddGrade(newGrade, course.GetId());
+     }
+
      SqlCommand cmd = new SqlCommand("INSERT INTO students_tracks (student_id, track_id) VALUES (@StudentId, @TrackId);", conn);
 
      cmd.Parameters.AddWithValue("@StudentId", this.GetId());
@@ -378,6 +385,21 @@ namespace Kickstart
         conn.Close();
       }
     }
+
+    public void DeleteTrackFromStudent()
+    {
+      SqlConnection conn = DB.Connection();
+      conn.Open();
+
+      SqlCommand cmd = new SqlCommand("DELETE FROM students_tracks WHERE student_id = @StudentId; DELETE FROM courses_grades_students WHERE student_id = @StudentId", conn);
+      cmd.Parameters.AddWithValue("@StudentId", this.GetId());
+      cmd.ExecuteNonQuery();
+      if (conn != null)
+      {
+        conn.Close();
+      }
+    }
+
 
     public static void RemoveAStudent(int id)
     {

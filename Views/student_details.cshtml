@@ -21,7 +21,7 @@
     <li>Address: @Model["student"].GetAddress()</li>
     <li>Email: @Model["student"].GetEmail()</li>
     <li>Current Track: @Model["track"].GetName()
-      @* <form class="" action="/tracks/student-add/" method="post">
+      <form action="/student/add-track" method="post">
         <label>Add a new track to this student:</label>
         <input type="hidden" name="student-id" value=@Model["student"].GetId()>
         <select class="" name="track-id">
@@ -31,15 +31,28 @@
           }
         </select>
         <button type="submit">Add Track</button>
-      </form> *@
+      </form>
       <ul><h3>Courses and grades</h3>
       @for (var i = 0; i < Model["courses"].Count; i++)
       {
-        <li>@Model["courses"][i].GetName()-- Attendance: @Model["grades"][i].GetAttendance(), Grade: @Model["grades"][i].GetGrade()</li>
+            <li>@Model["courses"][i].GetName()</li>
+          </li>
+        </ul>
+      </ul>
+      <form action="/student/update-grade" method="post">
+        <input type="hidden" name="course-id" value="course.GetId()">
+        <input type="hidden" name="student-id" value=@Model["student"].GetId()>
+        <div class="form-group">
+          <label for="attendance">Attendance:</label>
+          <input class="form-control" type="text" name="attendance" value='@Model["grades"][i].GetAttendance()' required>
+        </div>
+        <div class="form-group">
+          <label for="last-name">Grade:</label>
+          <input class="form-control" type="text" name="grade" value='@Model["grades"][i].GetGrade()' required>
+        </div>
+        <button type="submit">Update Grade</button>
+      </form>
       }
-      </li>
-    </ul>
-  </ul>
   <h4><a href='/student/delete/@Model["student"].GetId()'>Delete this student</a></h4>
   <h4><a href='/student/update/@Model["student"].GetId()'>Update Student Info</a></h4>
 </div>

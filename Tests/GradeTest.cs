@@ -42,17 +42,17 @@ namespace Kickstart
     //
     //   Assert.Equal(testVenues, allVenues);
     // }
-
-    [Fact]
-    public void Test_CheckUpdateGradeInfo_True()
-    {
-      Grade newGrade = new Grade("Good", "F");
-      newGrade.Save();
-      int id = newGrade.GetId();
-      Grade.Update("Loren", "A", id);
-      Grade updated = Grade.Find(id);
-      Assert.Equal(updated.GetAttendance(), "Loren");
-    }
+    // 
+    // [Fact]
+    // public void Test_CheckUpdateGradeInfo_True()
+    // {
+    //   Grade newGrade = new Grade("Good", "F");
+    //   newGrade.Save();
+    //   int id = newGrade.GetId();
+    //   Grade.Update("Loren", "A", id);
+    //   Grade updated = Grade.Find(id);
+    //   Assert.Equal(updated.GetAttendance(), "Loren");
+    // }
 
     [Fact]
     public void Test_CheckDeleteGrade_False()
