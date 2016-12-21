@@ -187,14 +187,13 @@ namespace Kickstart
       return foundStudent;
     }
 
-    public static Student FindByLogin(string user, string pass)
+    public static Student FindByLogin(string user)
     {
       SqlConnection conn = DB.Connection();
       conn.Open();
 
-      SqlCommand cmd = new SqlCommand("SELECT * FROM students WHERE username = @UserName AND password = @Password;", conn);
+      SqlCommand cmd = new SqlCommand("SELECT * FROM students WHERE username = @UserName;", conn);
       cmd.Parameters.AddWithValue("@UserName", user);
-      cmd.Parameters.AddWithValue("@Password", pass);
       SqlDataReader rdr = cmd.ExecuteReader();
 
       int foundStudentId = 0;

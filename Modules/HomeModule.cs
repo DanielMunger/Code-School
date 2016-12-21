@@ -412,8 +412,10 @@ namespace Kickstart
       {
         string username = Request.Form["user-name"];
         string pwd = Request.Form["user-password"];
-        Student foundStudent = Student.FindByLogin(username, pwd);
-        if(foundStudent.GetId() == 0)
+        Student foundStudent = Student.FindByLogin(username);
+        string encrypted = foundStudent.GetPassword();
+        bool loggedIn = PasswordStorage.VerifyPassword(pwd, encrypted);
+        if(!loggedIn)
         {
           string error = "Invalid Login";
           return View["login.cshtml", error];
@@ -436,7 +438,8 @@ namespace Kickstart
         string password = Request.Form["password"];
         string address = Request.Form["address"];
         string email = Request.Form["email"];
-        Student newStudent = new Student(firstName, lastName, userName, password, address, email);
+        string encrypted = PasswordStorage.CreateHash(password);
+        Student newStudent = new Student(firstName, lastName, userName, encrypted, address, email);
         newStudent.Save();
         return View["main.cshtml"];
       };
