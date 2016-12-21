@@ -7,7 +7,7 @@ button{
 }
 
 img{
-  max-width: 50%;
+  max-width: 75%;
 }
 
 .inline {
@@ -32,4 +32,46 @@ img{
 .embolden {
   font-size: 20;
   font-weight: bolder;
+}
+
+#student-info-well{
+  padding-left: 35%;
+  background-color: #29a7e1;
+  color: white;
+  text-shadow: 1px 1px black;
+  border: 1px black solid;
+}
+.student-info-header{
+  color: black;
+  font-size: .9em;
+  text-shadow: none;
+}
+#student-info {
+  list-style-type: square;
+}
+
+body {
+  background-color: lightgray;
+  font-family: lato;
+
+}
+
+#course-name{
+border-bottom: 1px #29a7e1 solid;
+font-family: lato;
+}
+
+#labels {
+  font-size: 18px;
+  font-weight: bold;
+  color: #767676;
+}
+
+#grades-title{
+  padding: 50px 0 50px 0;
+  font-size: 2.5em;
+}
+
+#update-grade-button {
+margin-top: 30px;
 }
