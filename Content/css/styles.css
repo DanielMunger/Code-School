@@ -1,13 +1,9 @@
-li{
-  font-size: 20px;
-}
-
 button{
   border-radius: 5px;
 }
 
 img{
-  max-width: 50%;
+  max-width: 75%;
 }
 
 .inline {
@@ -32,4 +28,78 @@ img{
 .embolden {
   font-size: 20;
   font-weight: bolder;
+}
+
+#student-info-well{
+  padding-left: 35%;
+  background-color: #29a7e1;
+  color: white;
+  text-shadow: 1px 1px black;
+  border: 1px black solid;
+}
+.student-info-header{
+  color: black;
+  font-size: .9em;
+  text-shadow: none;
+}
+#student-info {
+  list-style-type: square;
+}
+
+body {
+  background-color: lightgray;
+  font-family: lato;
+
+}
+
+#course-name{
+border-bottom: 1px #29a7e1 solid;
+font-family: lato;
+}
+
+#labels {
+  font-size: 18px;
+  font-weight: bold;
+  color: #767676;
+}
+
+#grades-title{
+  padding: 50px 0 50px 0;
+  font-size: 2.5em;
+}
+
+#update-grade-button {
+margin-top: 30px;
+}
+#return-to-school-button{
+  margin-left: 10%;
+}
+.add-instructor-select{
+  margin-top: 50px;
+}
+
+.school-title {
+  text-align: center;
+  background-color: #29a7e1;
+  color: white;
+  width: 80%;
+  margin: auto;
+}
+
+.tracks {
+  width: 80%;
+  margin: auto;
+  margin-bottom: 50px;
+}
+
+.track-names {
+  list-style: none;
+  font-size: 20px;
+  padding-top: 25px;
+  border-bottom: 1px #29a7e1 solid;
+}
+
+.track-buttons{
+  float: right;
+  padding-top: 25px;
 }

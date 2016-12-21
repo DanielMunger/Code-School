@@ -17,36 +17,44 @@
   </nav>
 </div>
 
-<h3>Here are the tracks that we offer:</h3>
+<h3>Here are the Tracks Offered:</h3>
 
 @foreach(var track in Model)
 {
   <div class="well title">
-    <h4 class="embolden">@track.GetName()</h4>
+    <h4 class="embolden"><u>@track.GetName()</u></h4>
     <form action="/track/edit/@track.GetId()" method="post">
       <input type="hidden" name="track-id" value='@track.GetId()'>
-      <button type="submit">Edit</button>
+      <button type="submit">Edit Track</button>
     </form>
     <div class="well inline">
-      <p>
-        Courses:
-      </p>
-      @if (track.GetCourses().Count < 3)
-      {
-        <form action="/courses/addto/@track.GetId()" method="get">
-          <input type="hidden" name="track-id" value="@track.GetId()">
-          <button type="submit">Add Course to This Track</button>
-        </form>
-      }
-      @foreach(var course in track.GetCourses())
-      {
-        <span>@course.GetName()</span>
-        <form action="/course/remove/@course.GetId()/@track.GetId()" method="post">
-          <input type="hidden" name="track-id" >
-          <button type="submit">Remove</button>
-        </form>
-        <!-- <a href="/course/remove/@course.GetId()/@track.GetId()">Remove Course</a> -->
-      }
+      <div class="row">
+        <div class="col-md-4">
+          <h3>Courses:</h3>
+          @if (track.GetCourses().Count < 3)
+          {
+            <form action="/courses/addto/@track.GetId()" method="get">
+              <input type="hidden" name="track-id" value="@track.GetId()">
+              <button type="submit">Add Course to This Track</button>
+            </form>
+          }
+        </div>
+        <div class="col-md-8">
+
+          @foreach(var course in track.GetCourses())
+          {
+            <span>@course.GetName()</span>
+            <form action="/course/remove/@course.GetId()/@track.GetId()" method="post">
+              <input type="hidden" name="track-id" >
+              <button type="submit">Remove</button>
+            </form>
+            <!-- <a href="/course/remove/@course.GetId()/@track.GetId()">Remove Course</a> -->
+          }
+        </div>
+      </div>
+
+
+
     </div>
   </div>
 }
