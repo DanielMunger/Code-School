@@ -4,83 +4,46 @@
 
 
 <h3 id="track-page-title">Add or Remove Courses from Tracks, Edit Tracks, or Add a New Track</h3>
-  @foreach(var track in Model)
-  {
+   @foreach(var track in Model)
+   {
 
-    <h4 class="well track-title"><span id="track-label">Track:</span> @track.GetName()
-      <div class="edit-track">
-        <form action="/track/edit/@track.GetId()" method="post">
-          <input type="hidden" name="track-id" value='@track.GetId()'>
-          <button type="submit">Edit Track</button>
-        </form>
-
-
-<h3>Here are the Tracks Offered:</h3>
-
-@foreach(var track in Model)
-{
-  <div class="well title">
-    <h4 class="embolden"><u>@track.GetName()</u></h4>
-    <form action="/track/edit/@track.GetId()" method="post">
-      <input type="hidden" name="track-id" value='@track.GetId()'>
-      <button type="submit">Edit Track</button>
-    </form>
-    <div class="well inline">
-      <div class="row">
-        <div class="col-md-4">
-          <h3>Courses:</h3>
-          @if (track.GetCourses().Count < 3)
-          {
-            <form action="/courses/addto/@track.GetId()" method="get">
-              <input type="hidden" name="track-id" value="@track.GetId()">
-              <button type="submit">Add Course to This Track</button>
-            </form>
-          }
+     <h4 class="well track-title"><span id="track-label">Track:</span> @track.GetName()
+       <div class="edit-track">
+         <form action="/track/edit/@track.GetId()" method="post">
+           <input type="hidden" name="track-id" value='@track.GetId()'>
+           <button type="submit">Edit Track</button>
+         </form>
         </div>
-        <div class="col-md-8">
+        </h4>
+           <div class="row courses-tracks">
+           <!-- <div class="well inline"> -->
+                 @if (track.GetCourses().Count < 3)
+                 {
+                   <div class="col-md-12 add-course-button">
+                     <form action="/courses/addto/@track.GetId()" method="get">
+                       <input type="hidden" name="track-id" value="@track.GetId()">
+                       <button type="submit">Add Course to This Track</button>
+                     </form>
+                   </div>
+                 }
+               </div>
+               <div class="row courses-tracks-2">
+                 @foreach(var course in track.GetCourses())
+                 {
 
-          @foreach(var course in track.GetCourses())
-          {
-            <span>@course.GetName()</span>
-            <form action="/course/remove/@course.GetId()/@track.GetId()" method="post">
-              <input type="hidden" name="track-id" >
-              <button type="submit">Remove</button>
-            </form>
-            <!-- <a href="/course/remove/@course.GetId()/@track.GetId()">Remove Course</a> -->
-          }
-        </div>
+                   <div class="col-md-10 course-names">
+                     <span><span id= "course-label">Course:</span> @course.GetName()</span>
+                   </div>
+                   <div class="col-md-2 courses-tracks-buttons">
+                     <form action="/course/remove/@course.GetId()/@track.GetId()" method="post">
+                       <input type="hidden" name="track-id" >
+                       <button type="submit">Remove</button>
+                     </form>
+                   </div>
+                 }
+               </div>
 
-      </div>
-    </h4>
-      <div class="row courses-tracks">
-      <!-- <div class="well inline"> -->
-            @if (track.GetCourses().Count < 3)
-            {
-              <div class="col-md-12 add-course-button">
-                <form action="/courses/addto/@track.GetId()" method="get">
-                  <input type="hidden" name="track-id" value="@track.GetId()">
-                  <button type="submit">Add Course to This Track</button>
-                </form>
-              </div>
-            }
-          </div>
-          <div class="row courses-tracks-2">
-            @foreach(var course in track.GetCourses())
-            {
+       }
 
-              <div class="col-md-10 course-names">
-                <span><span id= "course-label">Course:</span> @course.GetName()</span>
-              </div>
-              <div class="col-md-2 courses-tracks-buttons">
-                <form action="/course/remove/@course.GetId()/@track.GetId()" method="post">
-                  <input type="hidden" name="track-id" >
-                  <button type="submit">Remove</button>
-                </form>
-              </div>
-            }
-          </div>
-
-  }
-
-<button type="button" name="button"><a href="/tracks/add">Add a Track</a></button>
-<button type="button" name="button"><a href="/main">Return to Home</a></button>
+     <button type="button" name="button"><a href="/tracks/add">Add a Track</a></button>
+     <button type="button" name="button"><a href="/main">Return to Home</a></button>
