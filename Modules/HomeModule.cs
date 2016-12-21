@@ -421,6 +421,11 @@ namespace Kickstart
         return View["main.cshtml", foundStudent];
       };
 
+      Get["/account/logout"] = _ =>
+      {
+        return View["index.cshtml"];
+      };
+
 
       // Routes for Account Creation
       Post["/account/create"] = _ =>
