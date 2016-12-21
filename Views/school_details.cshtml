@@ -26,6 +26,10 @@
     @foreach (var track in Model["tracks"])
     {
       <li>@track.GetName()
+        <form action="/student/tracks/@track.GetId()" method="get">
+          <input type="hidden" name="track-id" value='@track.GetId()'>
+          <button type="submit">View All Students</button>
+        </form>
         <form action="/tracks" method="get">
           <input type="hidden" name="school-id" value='@Model["school"].GetId()'>
           <input type="hidden" name="track-id" value='@track.GetId()'>

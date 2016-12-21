@@ -108,6 +108,15 @@ namespace Kickstart
         model.Add("availtracks", allTracks);
         return View["student_details.cshtml", model];
       };
+      Get["/student/tracks/{id}"] = parameters =>
+      {
+        Dictionary<string, object> model = new Dictionary<string, object>();
+        Track selectedTrack = Track.Find(parameters.id);
+        List<Student> allStudents = selectedTrack.GetStudents();
+        model.Add("allStudents", allStudents);
+        model.Add("selectedTrack", selectedTrack);
+        return View["all_students.cshtml", model];
+      };
 
       // Routes for School Locations Page
       Get["/schools/add"] = _ =>
