@@ -81,7 +81,7 @@ namespace Kickstart
 
       Post["/student/update-grade"] = _ =>{
         Student foundStudent = Student.Find(Request.Form["student-id"]);
-        Grade.Update(Request.Form["attendance"], Request.Form["grade"], Parse.Int32(Request.Form["student-id"]), Parse.Int32(Request.Form["course-id"]));
+        Grade.Update(Request.Form["attendance"], Request.Form["grade"], Request.Form["student-id"], Request.Form["course-id"]);
         Dictionary<string, object> model = new Dictionary<string, object>{};
         List<Track> allTracks = Track.GetAll();
         Track newTrack = foundStudent.GetTrack();
@@ -348,22 +348,23 @@ namespace Kickstart
         string newName = Request.Form["course-name"];
         Track selectedTrack = Track.Find(Request.Form["track-id"]);
         List<Track> allTracks = Track.GetAll();
+        List<Course> allCourses = Course.GetAll();
 
         bool Exists = false;
-        foreach (Track track in allTracks)
+        foreach (Course course in allCourses)
         {
-          if (newName.ToLower() == track.GetName().ToLower())
+          if (newName.ToLower() == course.GetName().ToLower())
           {
             Exists = true;
           }
         }
 
-        if (Exists)
+        if (!Exists)
         {
           Course newCourse = new Course(newName);
           newCourse.Save();
           selectedTrack.AddCourse(newCourse);
-        }
+         }
 
         return View["tracks.cshtml", allTracks];
       };
