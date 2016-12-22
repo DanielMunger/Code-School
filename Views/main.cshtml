@@ -14,7 +14,7 @@
     <div>
       @if(Request.Cookies.ContainsKey("bool"))
             {
-              @if(Request.Cookies["bool"] == "false")
+              @if(Request.Cookies["bool"] == "true")
               {
                 <p>SUPER SENSITIVE INFORMATION</p>
               }

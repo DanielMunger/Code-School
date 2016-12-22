@@ -9,6 +9,13 @@
   </head>
   <body>
     <div class="container">
+      @if (Model == null)
+      {
+      }
+      else
+      {
+        <h3>@Model</h3>
+      }
       <h3>Make an account:</h3>
       <form action="/account/create" method="post">
         <div class="form-group">
