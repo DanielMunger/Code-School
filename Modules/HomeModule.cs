@@ -598,8 +598,9 @@ namespace Kickstart
       {
         Student selectedStudent = Student.Find(parameters.id);
         string goodhash = selectedStudent.GetPassword();
+        string currentpassword = Request.Form["current-password"];
         string newpassword = Request.Form["new-password"];
-        bool goodpassword = PasswordStorage.VerifyPassword(newpassword, goodhash);
+        bool goodpassword = PasswordStorage.VerifyPassword(currentpassword, goodhash);
         if(goodpassword)
         {
           string newhash = PasswordStorage.CreateHash(newpassword);
