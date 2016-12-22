@@ -19,8 +19,18 @@ ul{
 }
 
 nav li {
+  font-size: 20px;
+  margin-right: 6px;
+}
+
+/*a {
+  font-size: 16px;
+}*/
+
+.school-title {
   font-size: 18px;
 }
+
 /*class styling*/
 .inline {
   width: 100%;
@@ -107,7 +117,9 @@ nav li {
   padding-left: 11.5%;
   margin-bottom: 40px;
   padding-bottom: 25px;
-  border-bottom: 2px solid black;
+
+  border-bottom: 4px solid;
+  border-image: linear-gradient(to right, transparent, transparent, rgb(45, 164, 227), black, black, black, black, black, rgb(45, 164, 227), transparent, transparent) 10;
 }
 .add-course-button{
   margin-left: 35%;
@@ -133,7 +145,7 @@ nav li {
   color: white;
   width: 80%;
   margin: auto;
-  margin-top: 50px;
+  margin-top: 35px;
 }
 
 .edit-track {
@@ -171,12 +183,17 @@ nav li {
   /*margin: -0.5em auto 0px;*/
 }
 
+.left-to-right {
+
+}
+
 .special {
   width: 60%;
   float: right;
   margin-bottom: 0;
-  background-color: rgb(51, 52, 52);
-  border-color: black;
+  background-color: rgb(71, 72, 72);
+  border: 2px solid black;
+  box-shadow: inset 0px 0px 10px 5px rgba(0,0,0,0.6);
 }
 
 .special p{
