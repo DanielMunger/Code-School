@@ -418,6 +418,7 @@ namespace Kickstart
         Student foundStudent = Student.FindByLogin(username);
         string encrypted = foundStudent.GetPassword();
         bool loggedIn = PasswordStorage.VerifyPassword(pwd, encrypted);
+        //Add check for username
         if(!loggedIn)
         {
           string error = "Invalid Login";
