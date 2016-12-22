@@ -5,7 +5,16 @@
 <h3>Here are our schools:</h3>
 @foreach (var school in Model)
 {
-  <li><a href="/schools/@school.GetId()">@school.GetCity()</a></li>
+  <div class="well overflow">
+  <ul>
+    <li class="customfloat" id="schools-list">
+    <a href="/schools/@school.GetId()">@school.GetCity()</a>
+    </li>
+    <div class="well special">
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+    </div>
+  </ul>
+  </div>
 }
 @if(Request.Cookies.ContainsKey("bool"))
 {
