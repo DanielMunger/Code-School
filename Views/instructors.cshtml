@@ -2,7 +2,16 @@
   Layout="Shared/_Layout.cshtml";
 }
 
-<h3>Here are our instructors:</h3>
+
+<h3>Our instructors:</h3>
+@if(Request.Cookies.ContainsKey("bool"))
+{
+  @if(Request.Cookies["bool"] == "true")
+  {
+    <a class="btn btn-info" href="/instructor/create">Add Instructor</a>
+  }
+}
+
 
 @if(Model.Count > 0)
 {
