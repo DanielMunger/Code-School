@@ -10,18 +10,23 @@
     <div class="container">
       <h3>Students Enrolled in @Model["selectedTrack"].GetName()</h3>
     </div>
+    <ul>
     @foreach(var student in Model["allStudents"])
     {
       <li><a href="/student/details/@student.GetId()">@student.GetLastName(), @student.GetFirstName()</a></li>
     }
+  </ul>
   }
   else{
     <div class="container">
       <h3>Students Enrolled in @Model["selectedTrack"].GetName()</h3>
     </div>
-    @foreach(var student in Model["allStudents"])
-    {
-      <li>@student.GetLastName(), @student.GetFirstName()</li>
-    }
+    <ul>
+
+      @foreach(var student in Model["allStudents"])
+      {
+        <li>@student.GetLastName(), @student.GetFirstName()</li>
+      }
+    </ul>
   }
 }
