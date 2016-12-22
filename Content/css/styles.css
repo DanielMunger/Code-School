@@ -1,3 +1,10 @@
+/*html tag styling*/
+body {
+  /*background-color: lightgrey;*/
+  background-color: rgba(234,234,234,1);
+  font-family: lato;
+
+}
 button{
   border-radius: 5px;
 }
@@ -7,17 +14,21 @@ img{
   max-width: 75%;
 }
 
-#mainimg {
-    float: left;
-    margin-left: 15px;
+ul{
+  list-style: none;
 }
 
+nav li {
+  font-size: 18px;
+}
+/*class styling*/
 .inline {
   width: 100%;
-  background-color: lightgrey;
+  background-color: rgb(51, 52, 52);
   display: inline-block;
   text-align: center;
 }
+
 
 .inline span {
   margin-left: 20px;
@@ -36,67 +47,19 @@ img{
   font-weight: bolder;
 }
 
-#student-info-well{
-  padding-left: 35%;
-  background-color: #29a7e1;
-  color: white;
-  text-shadow: 1px 1px black;
-  border: 1px black solid;
-}
 .student-info-header{
   color: black;
   font-size: .9em;
   text-shadow: none;
 }
-#student-info {
-  list-style-type: square;
-}
 
-body {
-  background-color: lightgray;
-  font-family: lato;
-
-}
-
-#course-name{
-border-bottom: 1px #29a7e1 solid;
-font-family: lato;
-}
-
-#labels {
-  font-size: 18px;
-  font-weight: bold;
-  color: #767676;
-}
-#course-label{
-  font-size: 18px;
-  font-weight: bold;
-  color: #767676;
-}
-#track-label{
-  font-size: 18px;
-  font-weight: bold;
-  color: black;
-}
-
-#grades-title{
-  padding: 50px 0 50px 0;
-  font-size: 2.5em;
-}
-
-#update-grade-button {
-margin-top: 30px;
-}
-#return-to-school-button{
-  /*margin-left: 10%;*/
-}
 .add-instructor-select{
   /*margin-top: 50px;*/
 }
 
 .vertalign {
-vertical-align: middle;
-justify-content: center;
+  vertical-align: middle;
+  justify-content: center;
 }
 
 .school-title {
@@ -177,26 +140,115 @@ justify-content: center;
   color: black;
 }
 
-#track-page-title{
-  text-align: center;
-}
-
 .floatright {
-    float: right;
-    margin-left: 3px;
-    margin-right: 3px;
+  float: right;
+  margin-left: 3px;
+  margin-right: 3px;
 }
 
 .floatleft {
-    float: left;
+  float: left;
 }
 
 .limitwidth {
-    margin-top: 10px;
-    width: 1000px;
+  margin-top: 10px;
+  width: 1000px;
 }
 
 .btn-custom {
   background-color: rgb(68,68,68);
   color: white;
+}
+
+.special {
+  width: 60%;
+  float: right;
+  margin-bottom: 0;
+  background-color: rgb(51, 52, 52);
+}
+
+.special p{
+  color: white;
+}
+
+.inline p{
+  color: white;
+  font-size: 16px;
+}
+
+.inline h3{
+  color: white;
+}
+.overflow {
+  overflow: auto;
+  background-color: rgb(51, 52, 52);
+}
+
+.customfloat {
+  float: left;
+  vertical-align: middle;
+  margin-top: 45px;
+  margin-left: 20px;
+}
+
+.botmargin {
+  margin-bottom: 15px;
+}
+
+/*id styling*/
+#mainimg {
+  float: left;
+  margin-left: 15px;
+}
+
+#student-info-well{
+  padding-left: 35%;
+  background-color: #29a7e1;
+  color: white;
+  text-shadow: 1px 1px black;
+  border: 1px black solid;
+}
+#student-info {
+  list-style-type: square;
+}
+
+#course-name{
+border-bottom: 1px #29a7e1 solid;
+font-family: lato;
+}
+
+#labels {
+  font-size: 18px;
+  font-weight: bold;
+  color: #767676;
+}
+#course-label{
+  font-size: 18px;
+  font-weight: bold;
+  color: #767676;
+}
+#track-label{
+  font-size: 18px;
+  font-weight: bold;
+  color: black;
+}
+
+#grades-title{
+  padding: 50px 0 50px 0;
+  font-size: 2.5em;
+}
+
+#update-grade-button {
+margin-top: 30px;
+}
+#return-to-school-button{
+  /*margin-left: 10%;*/
+}
+
+#schools-list{
+  font-size: 35px;
+}
+
+#track-page-title{
+  text-align: center;
 }
