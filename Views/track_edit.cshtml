@@ -9,11 +9,17 @@
         <label for="course-name">First name:</label>
         <input class="form-control" type="text" name="course-name" value="@Model.GetName()" required>
       </div>
-      <button type="submit" class="btn btn-info">Save</button>
+      <!-- <button type="submit" class="btn btn-info">Save</button> -->
+      <button type="submit" class="btn btn-custom" aria-label="Left Align">
+        <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+      </button>
     </form>
+    <br>
     <form action="/track/remove/@Model.GetId()" method="post">
       <input type="hidden" name="track-id" value='@Model.GetId()'>
-      <button type="submit">Delete</button>
+      <button type="submit" class="btn btn-custom" aria-label="Left Align">
+        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+      </button>
     </form>
 
     <a href="/main">Return to Home</a>
