@@ -3,7 +3,13 @@ button{
 }
 
 img{
+  margin-top: 10px;
   max-width: 75%;
+}
+
+#mainimg {
+    float: left;
+    margin-left: 15px;
 }
 
 .inline {
@@ -82,18 +88,28 @@ font-family: lato;
 margin-top: 30px;
 }
 #return-to-school-button{
-  margin-left: 10%;
+  /*margin-left: 10%;*/
 }
 .add-instructor-select{
-  margin-top: 50px;
+  /*margin-top: 50px;*/
+}
+
+.vertalign {
+vertical-align: middle;
+justify-content: center;
 }
 
 .school-title {
   text-align: center;
-  background-color: #29a7e1;
+  background-color: #29a7e1;;
   color: white;
-  width: 80%;
+  width: 444px;
   margin: auto;
+  padding: 8px;
+}
+
+.adjheight {
+  height: 120px;
 }
 
 .tracks {
@@ -109,9 +125,15 @@ margin-top: 30px;
   border-bottom: 1px #29a7e1 solid;
 }
 
+.centalign {
+  text-align: center;
+}
+
 .track-buttons{
   float: right;
   padding-top: 25px;
+  margin-left: 1px;
+  margin-right: 1px;
 }
 
 .courses-tracks{
@@ -157,4 +179,24 @@ margin-top: 30px;
 
 #track-page-title{
   text-align: center;
+}
+
+.floatright {
+    float: right;
+    margin-left: 3px;
+    margin-right: 3px;
+}
+
+.floatleft {
+    float: left;
+}
+
+.limitwidth {
+    margin-top: 10px;
+    width: 1000px;
+}
+
+.btn-custom {
+  background-color: rgb(68,68,68);
+  color: white;
 }

@@ -1,15 +1,17 @@
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
     <ul class="nav navbar-nav">
-      <li><a href="/">Home</a></li>
+      <li><a href="/main">Home</a></li>
       <li><a href="/tracks">Tracks</a></li>
       <li><a href="/instructors">Instructors</a></li>
       <li><a href="/schools">Schools</a></li>
-      @if(Request.Cookies.ContainsKey("name"))
-      {
-        <li><a>Hello @Request.Cookies["name"]</a></li>
-      }
-      <li><a href="/account/logout">Logout</a></li>
     </ul>
+      <ul class="nav navbar-nav" style="float: right">
+          @if(Request.Cookies.ContainsKey("name"))
+          {
+            <li class="floatright"><a>Hello @Request.Cookies["name"]</a></li>
+          }
+          <li><a class="floatright" href="/account/logout">Logout</a></li>
+      </ul>
   </div>
 </nav>
