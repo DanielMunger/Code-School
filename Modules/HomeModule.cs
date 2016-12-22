@@ -417,6 +417,14 @@ namespace Kickstart
         string pwd = Request.Form["user-password"];
         Student foundStudent = Student.FindByLogin(username);
         string encrypted = foundStudent.GetPassword();
+        NancyCookie newCookie = new NancyCookie("name", foundStudent.GetUserName());
+        NancyCookie adminCookie = new NancyCookie("bool", "false");
+        if(foundStudent.GetUserName() == "sysadmin")
+        {
+          adminCookie = new NancyCookie("bool", "true");
+          //Console.WriteLine(Request.Cookies.);
+        }
+
         if(foundStudent.GetId() == 0)
         {
           string error = "Invalid Login";
@@ -431,8 +439,7 @@ namespace Kickstart
             string error = "Invalid Login";
             return View["login.cshtml", error];
           }
-          NancyCookie newCookie = new NancyCookie("name", foundStudent.GetUserName());
-          NancyCookie adminCookie = new NancyCookie("bool", "false");
+
           return View["main.cshtml", foundStudent].WithCookie(newCookie).WithCookie(adminCookie);
         }
         //TODO make cookie accept two parameters for admin or student
