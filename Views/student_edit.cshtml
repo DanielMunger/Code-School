@@ -3,31 +3,28 @@
 }
 
 <div class="container">
-    <h3>Update info for @Model.GetFirstName() @Model.GetLastName():</h3>
-    <form action="/student/updated/@Model.GetId()" method="post">
+    <h3>@Model["error"]</h3>
+    <h3>Update info for @Model["student"].GetFirstName() @Model["student"].GetLastName():</h3>
+    <form action='/student/updated/@Model["student"].GetId()' method="post">
       <div class="form-group">
         <label for="first-name">First name:</label>
-        <input class="form-control" type="text" name="first-name" value="@Model.GetFirstName()" required>
+        <input class="form-control" type="text" name="first-name" value='@Model["student"].GetFirstName()' required>
       </div>
       <div class="form-group">
         <label for="last-name">Last name:</label>
-        <input class="form-control" type="text" name="last-name" value="@Model.GetLastName()" required>
+        <input class="form-control" type="text" name="last-name" value='@Model["student"].GetLastName()' required>
       </div>
       <div class="form-group">
         <label for="username">Desired username:</label>
-        <input class="form-control" type="text" name="username" value="@Model.GetUserName()" required>
-      </div>
-      <div class="form-group">
-        <label for="password">Password:</label>
-        <input class="form-control" type="password" name="password" value="@Model.GetPassword()" required>
+        <input class="form-control" type="text" name="username" value='@Model["student"].GetUserName()' required>
       </div>
       <div class="form-group">
         <label for="address">Address:</label>
-        <input class="form-control" type="text" name="address" value="@Model.GetAddress()" required>
+        <input class="form-control" type="text" name="address" value='@Model["student"].GetAddress()' required>
       </div>
       <div class="form-group">
         <label for="email">Email:</label>
-        <input class="form-control" type="text" name="email" value="@Model.GetEmail()"required>
+        <input class="form-control" type="text" name="email" value='@Model["student"].GetEmail()'required>
       </div>
       <button type="submit" class="btn btn-info">Save</button>
     </form>

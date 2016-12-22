@@ -11,46 +11,83 @@
       <li><span class= "student-info-header">Email:</span> @Model["student"].GetEmail()</li>
       <li><span class= "student-info-header">Current Track:</span> @Model["track"].GetName()</li>
     </ul>
-  </div>
-      <form action="/student/add-track" method="post">
-        <label>Add or change track:</label>
-        <input type="hidden" name="student-id" value=@Model["student"].GetId()>
-        <select class="" name="track-id">
-          @foreach (var track in Model["availtracks"])
-          {
-            <option value=@track.GetId()>@track.GetName()</option>
-          }
-        </select>
-        <button type="submit">Add Track</button>
-      </form>
-      <h3 id="grades-title"><center><u>Courses and Grades</u></center></h3>
-
-      @for (var i = 0; i < Model["courses"].Count; i++)
+    @if(Request.Cookies.ContainsKey("bool"))
+    {
+      @if(Request.Cookies["bool"] == "true")
       {
-        <div class="row">
-          <div class="col-md-6" id="course-name">
-            <h3><span id="labels">Course:</span> @Model["courses"][i].GetName()</h3>
-          </div>
+      </div>
+          <form action="/student/add-track" method="post">
+            <label>Add or change track:</label>
+            <input type="hidden" name="student-id" value=@Model["student"].GetId()>
+            <select class="" name="track-id">
+              @foreach (var track in Model["availtracks"])
+              {
+                <option value=@track.GetId()>@track.GetName()</option>
+              }
+            </select>
+            <button type="submit">Add Track</button>
+          </form>
+          <h3 id="grades-title"><center><u>Courses and Grades</u></center></h3>
 
-      <form action="/student/update-grade" method="post">
-        <input type="hidden" name="course-id" value='@Model["courses"][i].GetId()'>
-        <input type="hidden" name="student-id" value='@Model["student"].GetId()'>
-        <div class="form-group col-md-2 grades">
-          <label for="attendance">Attendance:</label>
-          <input class="form-control" type="text" name="attendance" value='@Model["grades"][i].GetAttendance()' required>
+          @for (var i = 0; i < Model["courses"].Count; i++)
+          {
+            <div class="row">
+              <div class="col-md-6" id="course-name">
+                <h3><span id="labels">Course:</span> @Model["courses"][i].GetName()</h3>
+              </div>
+
+          <form action="/student/update-grade" method="post">
+            <input type="hidden" name="course-id" value='@Model["courses"][i].GetId()'>
+            <input type="hidden" name="student-id" value='@Model["student"].GetId()'>
+            <div class="form-group col-md-2 grades">
+              <label for="attendance">Attendance:</label>
+              <input class="form-control" type="text" name="attendance" value='@Model["grades"][i].GetAttendance()' required>
+            </div>
+            <div class="form-group col-md-2 grades">
+              <label for="last-name">Grade:</label>
+              <input class="form-control" type="text" name="grade" value='@Model["grades"][i].GetGrade()' required>
+            </div>
+            <div class="col-md-2" id="update-grade-button">
+              <button type="submit">Update Grade</button>
+            </div>
+          </form>
         </div>
-        <div class="form-group col-md-2 grades">
-          <label for="last-name">Grade:</label>
-          <input class="form-control" type="text" name="grade" value='@Model["grades"][i].GetGrade()' required>
-        </div>
-        <div class="col-md-2" id="update-grade-button">
-          <button type="submit">Update Grade</button>
-        </div>
-      </form>
+          }
+    </br>
+      <a href='/student/update/@Model["student"].GetId()'>Update Student Info</a>
+      <span>|</span>
+      <a href='/student/delete/@Model["student"].GetId()'>Delete this student</a>
     </div>
+
       }
-</br>
-  <a href='/student/update/@Model["student"].GetId()'>Update Student Info</a>
-  <span>|</span>
-  <a href='/student/delete/@Model["student"].GetId()'>Delete this student</a>
-</div>
+      else{
+      </div>
+          <h3 id="grades-title"><center><u>Courses and Grades</u></center></h3>
+
+          @for (var i = 0; i < Model["courses"].Count; i++)
+          {
+            <div class="row">
+              <div class="col-md-6" id="course-name">
+                <h3><span id="labels">Course:</span> @Model["courses"][i].GetName()</h3>
+              </div>
+
+              <form action="/student/update-grade" method="post">
+                <input type="hidden" name="course-id" value='@Model["courses"][i].GetId()'>
+                <input type="hidden" name="student-id" value='@Model["student"].GetId()'>
+                <div class="form-group col-md-2 grades">
+                  <label for="attendance">Attendance:</label>
+                  <input class="form-control" type="text" name="attendance" value='@Model["grades"][i].GetAttendance()' readonly>
+                </div>
+                <div class="form-group col-md-2 grades">
+                  <label for="last-name">Grade:</label>
+                  <input class="form-control" type="text" name="grade" value='@Model["grades"][i].GetGrade()' readonly>
+                </div>
+                <div class="col-md-2" id="update-grade-button">
+                </div>
+              </form>
+            </div>
+          }
+          </br>
+          <a href='/student/update/@Model["student"].GetId()'>Update Student Info</a>
+      }
+    }

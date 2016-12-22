@@ -45,7 +45,8 @@ namespace Kickstart
       //Student Details routing
       Get["/student/details/{id}"] = parameters =>{
         Dictionary<string, object> model = new Dictionary<string, object>{};
-        Student foundStudent = Student.Find(parameters.id);
+        int parsedId = Int32.Parse(parameters.id);
+        Student foundStudent = Student.Find(parsedId);
         Track newTrack = foundStudent.GetTrack();
         List<Track> allTracks = Track.GetAll();
         List<Course> courses = foundStudent.GetCourses();
@@ -413,6 +414,7 @@ namespace Kickstart
         string pwd = Request.Form["user-password"];
         Student foundStudent = Student.FindByLogin(username);
         string encrypted = foundStudent.GetPassword();
+        NancyCookie idCookie = new NancyCookie("id", foundStudent.GetId().ToString());
         NancyCookie newCookie = new NancyCookie("name", foundStudent.GetUserName());
         NancyCookie adminCookie = new NancyCookie("bool", "false");
         if(foundStudent.GetUserName() == "sysadmin")
@@ -436,7 +438,7 @@ namespace Kickstart
             return View["login.cshtml", error];
           }
 
-          return View["main.cshtml", foundStudent].WithCookie(newCookie).WithCookie(adminCookie);
+          return View["main.cshtml", foundStudent].WithCookie(newCookie).WithCookie(adminCookie).WithCookie(idCookie);
         }
         //TODO make cookie accept two parameters for admin or student
       };
@@ -511,12 +513,28 @@ namespace Kickstart
       //Routes for Updating
       Get["/student/update/{id}"] = parameters =>{
         Student selectedStudent = Student.Find(parameters.id);
-        return View["student_edit.cshtml", selectedStudent];
+        Dictionary<string, object> model = new Dictionary<string, object>();
+        model.Add("error", "");
+        model.Add("student", selectedStudent);
+        return View["student_edit.cshtml", model];
       };
 
       Post["/student/updated/{id}"] = parameters =>{
         Student selectedStudent = Student.Find(parameters.id);
-        Student.Update(Request.Form["first-name"], Request.Form["last-name"], Request.Form["username"], Request.Form["password"], Request.Form["address"], Request.Form["email"], parameters.id);
+        List<Student> allStudents = Student.GetAll();
+        Dictionary<string, object> errorModel = new Dictionary<string, object>();
+        errorModel.Add("student", selectedStudent);
+        string username = Request.Form["username"];
+        foreach(Student student in allStudents)
+        {
+          if(student.GetUserName() == username )
+          {
+            string error = "That UserName is Taken";
+            errorModel.Add("error", error);
+            return View["student_edit.cshtml", errorModel];
+          }
+        }
+        Student.Update(Request.Form["first-name"], Request.Form["last-name"], username ,selectedStudent.GetPassword(), Request.Form["address"], Request.Form["email"], parameters.id);
         Dictionary<string, object> model = new Dictionary<string, object>{};
         Student foundStudent = Student.Find(parameters.id);
         Track newTrack = foundStudent.GetTrack();
@@ -533,6 +551,7 @@ namespace Kickstart
         model.Add("courses", courses);
         model.Add("grades", grades);
         model.Add("availtracks", allTracks);
+      
         return View["student_details.cshtml", model];
       };
 

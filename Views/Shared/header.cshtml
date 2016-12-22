@@ -9,7 +9,7 @@
       <ul class="nav navbar-nav" style="float: right">
           @if(Request.Cookies.ContainsKey("name"))
           {
-            <li class="floatright"><a>Hello @Request.Cookies["name"]</a></li>
+            <li class="floatright"><a href='/student/details/@Request.Cookies["id"]'>Hello @Request.Cookies["name"]</a></li>
           }
           <li><a class="floatright" href="/account/logout">Logout</a></li>
       </ul>
