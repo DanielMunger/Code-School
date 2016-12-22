@@ -3,8 +3,13 @@
 }
 
 <h3>Here are our instructors:</h3>
-
-<a class="btn btn-info" href="/instructor/create">Add Instructor</a>
+@if(Request.Cookies.ContainsKey("bool"))
+{
+  @if(Request.Cookies["bool"] == "true")
+  {
+    <a class="btn btn-info" href="/instructor/create">Add Instructor</a>
+  }
+}
 
 
 @if(Model.Count > 0)
@@ -21,4 +26,6 @@
     </div>
   }
 }
-<a href="/main">Return to Home</a>
+<div class="container text-center">
+  <a href="/main">Return to Home</a>
+</div>
