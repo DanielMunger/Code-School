@@ -45,23 +45,24 @@
            <div class="row courses-tracks-2">
              @foreach(var course in track.GetCourses())
              {
-
-               <div class="col-md-10 course-names">
-                 <span><span id= "course-label">Course:</span> @course.GetName()</span>
-               </div>
-               <div class="col-md-2 courses-tracks-buttons">
-               @if(Request.Cookies.ContainsKey("bool"))
-               {
-                 @if(Request.Cookies["bool"] == "true")
+               <div class="row rowoverflow">
+                 <div class="col-md-10 course-names">
+                   <span><span id= "course-label">Course:</span> @course.GetName()</span>
+                 </div>
+                 <div class="col-md-2 courses-tracks-buttons">
+                 @if(Request.Cookies.ContainsKey("bool"))
                  {
-                   <form action="/course/remove/@course.GetId()/@track.GetId()" method="post">
-                     <input type="hidden" name="track-id" >
-                     <button type="submit" class="btn btn-custom" aria-label="Left Align">
-                       <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                     </button>
-                   </form>
+                   @if(Request.Cookies["bool"] == "true")
+                   {
+                     <form action="/course/remove/@course.GetId()/@track.GetId()" method="post">
+                       <input type="hidden" name="track-id" >
+                       <button type="submit" class="btn btn-custom2" aria-label="Left Align">
+                         <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                       </button>
+                     </form>
+                   }
                  }
-               }
+                 </div>
                </div>
              }
            </div>
