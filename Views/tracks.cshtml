@@ -7,7 +7,7 @@
    @foreach(var track in Model)
    {
      <div class="row">
-       <h4 class="well track-title"><span class="floatleft" id="track-label">Track:</span> @track.GetName()
+       <h4 class="well track-title"><span class="floatleft" id="track-label">Track:</span> <span id="track-name">@track.GetName()</span>
          <div class="edit-track floatright vertalign">
          @if(Request.Cookies.ContainsKey("bool"))
          {
