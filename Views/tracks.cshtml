@@ -9,12 +9,18 @@
      <div class="row">
        <h4 class="well track-title"><span class="floatleft" id="track-label">Track:</span> @track.GetName()
          <div class="edit-track floatright vertalign">
-           <form action="/track/edit/@track.GetId()" method="post">
-             <input type="hidden" name="track-id" value='@track.GetId()'>
-             <button type="submit" class="btn btn-custom" aria-label="Left Align">
-               <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-             </button>
-           </form>
+         @if(Request.Cookies.ContainsKey("bool"))
+         {
+           @if(Request.Cookies["bool"] == "true")
+           {
+             <form action="/track/edit/@track.GetId()" method="post">
+               <input type="hidden" name="track-id" value='@track.GetId()'>
+               <button type="submit" class="btn btn-custom" aria-label="Left Align">
+                 <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+               </button>
+             </form>
+           }
+         }
           </div>
           </h4>
       </div>
@@ -23,10 +29,16 @@
              @if (track.GetCourses().Count < 3)
              {
                <div class="col-md-12 add-course-button">
-                 <form action="/courses/addto/@track.GetId()" method="get">
-                   <input type="hidden" name="track-id" value="@track.GetId()">
-                   <button type="submit">Add Course to This Track</button>
-                 </form>
+               @if(Request.Cookies.ContainsKey("bool"))
+               {
+                 @if(Request.Cookies["bool"] == "true")
+                 {
+                   <form action="/courses/addto/@track.GetId()" method="get">
+                     <input type="hidden" name="track-id" value="@track.GetId()">
+                     <button type="submit">Add Course to This Track</button>
+                   </form>
+                 }
+               }
                </div>
              }
            </div>
@@ -38,19 +50,31 @@
                  <span><span id= "course-label">Course:</span> @course.GetName()</span>
                </div>
                <div class="col-md-2 courses-tracks-buttons">
-                 <form action="/course/remove/@course.GetId()/@track.GetId()" method="post">
-                   <input type="hidden" name="track-id" >
-                   <button type="submit" class="btn btn-custom" aria-label="Left Align">
-                     <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                   </button>
-                 </form>
+               @if(Request.Cookies.ContainsKey("bool"))
+               {
+                 @if(Request.Cookies["bool"] == "true")
+                 {
+                   <form action="/course/remove/@course.GetId()/@track.GetId()" method="post">
+                     <input type="hidden" name="track-id" >
+                     <button type="submit" class="btn btn-custom" aria-label="Left Align">
+                       <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                     </button>
+                   </form>
+                 }
+               }
                </div>
              }
            </div>
 
        }
        <div class="container text-center">
-         <a href="/tracks/add">Add a Track</a>
-          <span>|</span>
+        @if(Request.Cookies.ContainsKey("bool"))
+        {
+          @if(Request.Cookies["bool"] == "true")
+          {
+            <a href="/tracks/add">Add a Track</a>
+            <span>|</span>
+          }
+        }
          <a href="/main">Return to Home</a>
        </div>

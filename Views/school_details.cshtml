@@ -14,44 +14,56 @@
             <div class="col-md-8">
               <li class="track-names">@track.GetName()</li>
             </div>
-            <div class="col-md-4">
-              <form class="track-buttons" action="/track/delete/@track.GetId()" method="post">
-                <input type="hidden" name="school-id" value='@Model["school"].GetId()'>
-                <input type="hidden" name="track-id" value='@track.GetId()'>
-                <button type="submit" class="btn btn-custom" aria-label="Left Align">
-                  <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                </button>
-              </form>
-              <form class="track-buttons" action="/tracks" method="get">
-                <input type="hidden" name="school-id" value='@Model["school"].GetId()'>
-                <input type="hidden" name="track-id" value='@track.GetId()'>
-                <button type="submit" class="btn btn-custom" aria-label="Left Align">
-                  <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                </button>
-              </form>
+            @if(Request.Cookies.ContainsKey("bool"))
+            {
+              @if(Request.Cookies["bool"] == "true")
+              {
+              <div class="col-md-4">
+                <form class="track-buttons" action="/track/delete/@track.GetId()" method="post">
+                  <input type="hidden" name="school-id" value='@Model["school"].GetId()'>
+                  <input type="hidden" name="track-id" value='@track.GetId()'>
+                  <button type="submit" class="btn btn-custom" aria-label="Left Align">
+                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                  </button>
+                </form>
+                <form class="track-buttons" action="/tracks" method="get">
+                  <input type="hidden" name="school-id" value='@Model["school"].GetId()'>
+                  <input type="hidden" name="track-id" value='@track.GetId()'>
+                  <button type="submit" class="btn btn-custom" aria-label="Left Align">
+                    <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                  </button>
+                </form>
               <form class="track-buttons" action="/student/tracks/@track.GetId()" method="get">
                 <input type="hidden" name="track-id" value='@track.GetId()'>
                 <button type="submit" class="btn btn-custom" aria-label="Left Align">
                   <span class="glyphicon glyphicon-eye-open greycolor" aria-hidden="true"></span>
                 </button>
-              </form>
-            </div>
+                </form>
+                </div>
+              }
+            }
           </div>
         }
       }
       @if (Model["availtracks"].Count > 0)
       {
-        <form class="" action="/tracks/addto/" method="post">
-          <label>Add a new track to this school:</label>
-          <input type="hidden" name="school-id" value=@Model["school"].GetId()>
-          <select class="" name="track-id">
+        @if(Request.Cookies.ContainsKey("bool"))
+        {
+          @if(Request.Cookies["bool"] == "true")
+          {
+            <form class="" action="/tracks/addto/" method="post">
+            <label>Add a new track to this school:</label>
+            <input type="hidden" name="school-id" value=@Model["school"].GetId()>
+            <select class="" name="track-id">
             @foreach (var track in Model["availtracks"])
             {
               <option value=@track.GetId()>@track.GetName()</option>
             }
-          </select>
-          <button class="floatright" type="submit">Add Track</button>
-        </form>
+            </select>
+            <button class="floatright" type="submit">Add Track</button>
+            </form>
+          }
+        }
       }
     </div>
   </div>
@@ -66,39 +78,50 @@
               <div class="col-md-8">
                 <li class="track-names">@instructor.GetName()</li>
               </div>
-              <div class="col-md-4">
-                <form class="track-buttons" action="/instructor/remove/@instructor.GetId()" method="post">
-                  <input type="hidden" name="school-id" value='@Model["school"].GetId()'>
-                  <input type="hidden" name="instructor-id" value='@instructor.GetId()'>
-                  <button type="submit" class="btn btn-custom" aria-label="Left Align">
-                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                  </button>
-                </form>
-                <form class="track-buttons" action="/instructor/update/@instructor.GetId()" method="get">
-                  <input type="hidden" name="school-id" value='@Model["school"].GetId()'>
-                  <input type="hidden" name="instructor-id" value='@instructor.GetId()'>
-                  <button type="submit" class="btn btn-custom" aria-label="Left Align">
-                    <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                  </button>
-                </form>
-              </div>
+              @if(Request.Cookies.ContainsKey("bool"))
+              {
+                @if(Request.Cookies["bool"] == "true")
+                {
+                  <div class="col-md-4">
+                    <form class="track-buttons" action="/instructor/remove/@instructor.GetId()" method="post">
+                      <input type="hidden" name="school-id" value='@Model["school"].GetId()'>
+                      <input type="hidden" name="instructor-id" value='@instructor.GetId()'>
+                      <button type="submit" class="btn btn-custom" aria-label="Left Align">
+                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                      </button>
+                    </form>
+                    <form class="track-buttons" action="/instructor/update/@instructor.GetId()" method="get">
+                      <input type="hidden" name="school-id" value='@Model["school"].GetId()'>
+                      <input type="hidden" name="instructor-id" value='@instructor.GetId()'>
+                      <button type="submit" class="btn btn-custom" aria-label="Left Align">
+                        <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                      </button>
+                    </form>
+                  </div>
+                }
+              }
             </div>
-
           }
       }
       @if (Model["availinstructors"].Count > 0)
       {
-        <form class="add-instructor-select" action="/instructors/addto/" method="post">
-          <label>Add a new instructor to this school:</label>
-          <input type="hidden" name="school-id" value=@Model["school"].GetId()>
-          <select class="" name="instructor-id">
-            @foreach (var instructor in Model["availinstructors"])
-            {
-              <option value=@instructor.GetId()>@instructor.GetName()</option>
-            }
-          </select>
-          <button class="floatright" type="submit">Add Instructor</button>
-        </form>
+        @if(Request.Cookies.ContainsKey("bool"))
+        {
+          @if(Request.Cookies["bool"] == "true")
+          {
+            <form class="add-instructor-select" action="/instructors/addto/" method="post">
+              <label>Add a new instructor to this school:</label>
+              <input type="hidden" name="school-id" value=@Model["school"].GetId()>
+              <select class="" name="instructor-id">
+                @foreach (var instructor in Model["availinstructors"])
+                {
+                  <option value=@instructor.GetId()>@instructor.GetName()</option>
+                }
+              </select>
+              <button class="floatright" type="submit">Add Instructor</button>
+            </form>
+          }
+        }
       }
     </div>
   </div>
