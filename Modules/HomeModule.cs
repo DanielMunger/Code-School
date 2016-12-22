@@ -417,16 +417,24 @@ namespace Kickstart
         string pwd = Request.Form["user-password"];
         Student foundStudent = Student.FindByLogin(username);
         string encrypted = foundStudent.GetPassword();
-        bool loggedIn = PasswordStorage.VerifyPassword(pwd, encrypted);
-        //Add check for username
-        if(!loggedIn)
+        if(foundStudent.GetId() == 0)
         {
           string error = "Invalid Login";
           return View["login.cshtml", error];
         }
-        NancyCookie newCookie = new NancyCookie("name", foundStudent.GetUserName());
-        NancyCookie adminCookie = new NancyCookie("bool", "false");
-        return View["main.cshtml", foundStudent].WithCookie(newCookie).WithCookie(adminCookie);
+        else
+        {
+          bool loggedIn = PasswordStorage.VerifyPassword(pwd, encrypted);
+          //Add check for username
+          if(!loggedIn)
+          {
+            string error = "Invalid Login";
+            return View["login.cshtml", error];
+          }
+          NancyCookie newCookie = new NancyCookie("name", foundStudent.GetUserName());
+          NancyCookie adminCookie = new NancyCookie("bool", "false");
+          return View["main.cshtml", foundStudent].WithCookie(newCookie).WithCookie(adminCookie);
+        }
         //TODO make cookie accept two parameters for admin or student
       };
 
@@ -454,6 +462,15 @@ namespace Kickstart
         string password = Request.Form["password"];
         string address = Request.Form["address"];
         string email = Request.Form["email"];
+        List<Student> allStudents = Student.GetAll();
+        foreach(Student student in allStudents)
+        {
+          if(student.GetUserName() == userName)
+          {
+            string error = "User name already exists";
+            return View["new_account.cshtml", error];
+          }
+        }
         string encrypted = PasswordStorage.CreateHash(password);
         Student newStudent = new Student(firstName, lastName, userName, encrypted, address, email);
         newStudent.Save();
