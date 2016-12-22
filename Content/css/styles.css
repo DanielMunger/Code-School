@@ -9,10 +9,10 @@ button{
   border-radius: 5px;
 }
 
-img{
+/*img{
   margin-top: 10px;
   max-width: 75%;
-}
+}*/
 
 ul{
   list-style: none;
@@ -21,6 +21,10 @@ ul{
 nav li {
   font-size: 20px;
   margin-right: 6px;
+}
+
+h3 {
+  margin-top: 10px;
 }
 
 /*a {
@@ -48,8 +52,15 @@ nav li {
 }
 
 .title {
+  vertical-align: center;
+  float: left;
   text-align: center;
+  color: white;
+}
 
+.margintop {
+  margin-left: 3%;
+  margin-top: 11%;
 }
 
 .embolden {
@@ -83,6 +94,14 @@ nav li {
 
 .adjheight {
   height: 120px;
+}
+
+.schoolname {
+    text-shadow: 1px 1px 4px #000;
+}
+
+.schoolname:hover {
+  text-decoration: none;
 }
 
 .tracks {
@@ -166,7 +185,23 @@ nav li {
 
 .limitwidth {
   margin-top: 10px;
-  width: 1000px;
+  width: 873px;
+}
+
+.squarebtn {
+  border-radius: 0;
+  border: solid rgb(52, 52, 52);
+  border-width: 2px 2px 0px;
+}
+
+.squarebtn:hover {
+  border-radius: 0;
+  border: solid rgb(52, 52, 52);
+  border-width: 2px 2px 0px;
+}
+
+.navbar-inverse {
+  background-color: rgb(52, 52, 52);
 }
 
 .btn-custom {
@@ -183,8 +218,8 @@ nav li {
   /*margin: -0.5em auto 0px;*/
 }
 
-.left-to-right {
-
+.glyphicon:hover {
+  color: rgb(45, 164, 227);
 }
 
 .special {
@@ -230,8 +265,9 @@ nav li {
 
 /*id styling*/
 #mainimg {
-  float: left;
-  margin-left: 15px;
+  /*float: left;*/
+  /*margin-left: 15px;*/
+  width: 50%;
 }
 
 #student-info-well{
@@ -265,6 +301,11 @@ font-family: lato;
   font-weight: bold;
   color: black;
   float: left;
+}
+
+#track-name{
+  margin-left: 10px;
+  text-shadow: 1px 1px black;
 }
 
 #grades-title{
