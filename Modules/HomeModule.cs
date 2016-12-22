@@ -424,16 +424,21 @@ namespace Kickstart
           return View["login.cshtml", error];
         }
         NancyCookie newCookie = new NancyCookie("name", foundStudent.GetUserName());
-        return View["main.cshtml", foundStudent].WithCookie(newCookie);
+        NancyCookie adminCookie = new NancyCookie("bool", "false");
+        return View["main.cshtml", foundStudent].WithCookie(newCookie).WithCookie(adminCookie);
+        //TODO make cookie accept two parameters for admin or student
       };
 
       Get["/account/logout"] = _ =>
       {
-        if (Request.Cookies["name"] != null)
+        if (Request.Cookies.ContainsKey("name") == true)
         {
-            NancyCookie newCookie = new NancyCookie("name", "");
-            newCookie.Expires = DateTime.Now.AddDays(-1d);
-            return View["index.cshtml"].WithCookie(newCookie);
+          if (Request.Cookies["name"] != null)
+          {
+              NancyCookie newCookie = new NancyCookie("name", "");
+              newCookie.Expires = DateTime.Now.AddDays(-1d);
+              return View["index.cshtml"].WithCookie(newCookie);
+          }
         }
         return View["index.cshtml"];
       };

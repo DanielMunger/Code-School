@@ -12,11 +12,6 @@
         <div class="col-md-12">
           <img src="/Content/img/logo.jpg" alt="kickstart-logo" />
         </div>
-
-        @if(Request.Cookies.ContainsKey("name"))
-        {
-          <li><a>Hello @Request.Cookies["name"]</a></li>
-        }
         <a href="/account/create" class="btn btn-info">Create Account</a>
         <a href="/account/login" class="btn btn-info">Login</a>
       </div>

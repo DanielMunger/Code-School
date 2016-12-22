@@ -11,5 +11,15 @@
       <h4>Welcome to KickStart University</h4>
       <h5>Where Dreams get......Kick started...</h5>
     </div>
+    <div>
+      @if(Request.Cookies.ContainsKey("bool"))
+            {
+              @if(Request.Cookies["bool"] == "false")
+              {
+                <p>SUPER SENSITIVE INFORMATION</p>
+              }
+            }
+      <p>Student information</p>
+    </div>
   </div>
 </div>
