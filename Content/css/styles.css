@@ -218,7 +218,7 @@ h3 {
   /*margin: -0.5em auto 0px;*/
 }
 
-.glyphicon:hover {
+button:hover .glyphicon {
   color: rgb(45, 164, 227);
 }
 

@@ -112,7 +112,7 @@
           @if(Request.Cookies["bool"] == "true")
           {
             <form class="add-instructor-select" action="/instructors/addto/" method="post">
-              <label>Add a new instructor to this school:</label>
+              <label>Add an instructor:</label>
               <input type="hidden" name="school-id" value=@Model["school"].GetId()>
               <select class="" name="instructor-id">
                 @foreach (var instructor in Model["availinstructors"])
