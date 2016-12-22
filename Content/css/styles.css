@@ -165,6 +165,7 @@ nav li {
   float: right;
   margin-bottom: 0;
   background-color: rgb(51, 52, 52);
+  border-color: black;
 }
 
 .special p{
