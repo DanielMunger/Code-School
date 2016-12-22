@@ -193,7 +193,7 @@ nav li {
   margin-bottom: 0;
   background-color: rgb(71, 72, 72);
   border: 2px solid black;
-  box-shadow: inset 0px 0px 10px 5px rgba(0,0,0,0.6);
+  box-shadow: inset 0px 0px 5px 3px rgba(0,0,0,0.6);
 }
 
 .special p{
