@@ -124,6 +124,8 @@ nav li {
 
   width: 80%;
   border-bottom: 1px #29a7e1 solid;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 .track-title{
@@ -158,6 +160,15 @@ nav li {
 .btn-custom {
   background-color: rgb(68,68,68);
   color: white;
+  margin: 10px;
+  margin: -0.5em auto 0px;
+}
+
+.btn-custom2 {
+  background-color: rgb(68,68,68);
+  color: white;
+  margin: 3px;
+  /*margin: -0.5em auto 0px;*/
 }
 
 .special {
@@ -170,6 +181,10 @@ nav li {
 
 .special p{
   color: white;
+}
+
+.rowoverflow {
+  /*overflow-x: auto;*/
 }
 
 .inline p{
@@ -232,6 +247,7 @@ font-family: lato;
   font-size: 18px;
   font-weight: bold;
   color: black;
+  float: left;
 }
 
 #grades-title{
