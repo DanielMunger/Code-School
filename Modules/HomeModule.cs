@@ -440,20 +440,22 @@ namespace Kickstart
 
           return View["main.cshtml", foundStudent].WithCookie(newCookie).WithCookie(adminCookie).WithCookie(idCookie);
         }
-        //TODO make cookie accept two parameters for admin or student
+      
       };
 
       Get["/account/logout"] = _ =>
       {
-        if (Request.Cookies.ContainsKey("name") == true)
-        {
-          if (Request.Cookies["name"] != null)
-          {
+        // if (Request.Cookies.ContainsKey("name") == true)
+        // {
+        //   if (Request.Cookies["name"] != null)
+        //   {
               NancyCookie newCookie = new NancyCookie("name", "");
+              NancyCookie idCookie = new NancyCookie("id", "");
+              NancyCookie adminCookie = new NancyCookie("bool", "false");
               newCookie.Expires = DateTime.Now.AddDays(-1d);
               return View["index.cshtml"].WithCookie(newCookie);
-          }
-        }
+        //   }
+        // }
         return View["index.cshtml"];
       };
 
@@ -461,6 +463,7 @@ namespace Kickstart
       // Routes for Account Creation
       Post["/account/create"] = _ =>
       {
+
         string firstName = Request.Form["first-name"];
         string lastName = Request.Form["last-name"];
         string userName = Request.Form["user-name"];
@@ -480,7 +483,9 @@ namespace Kickstart
         Student newStudent = new Student(firstName, lastName, userName, encrypted, address, email);
         newStudent.Save();
         NancyCookie newCookie = new NancyCookie("name", newStudent.GetUserName());
-        return View["main.cshtml"].WithCookie(newCookie);
+        NancyCookie idCookie = new NancyCookie("id", newStudent.GetId().ToString());
+        NancyCookie adminCookie = new NancyCookie("bool", "false");
+        return View["main.cshtml"].WithCookie(newCookie).WithCookie(idCookie).WithCookie(adminCookie);
       };
 
       Get["/instructor/create"] = _ =>{
