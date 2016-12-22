@@ -440,7 +440,7 @@ namespace Kickstart
 
           return View["main.cshtml", foundStudent].WithCookie(newCookie).WithCookie(adminCookie).WithCookie(idCookie);
         }
-      
+
       };
 
       Get["/account/logout"] = _ =>
@@ -482,6 +482,8 @@ namespace Kickstart
         string encrypted = PasswordStorage.CreateHash(password);
         Student newStudent = new Student(firstName, lastName, userName, encrypted, address, email);
         newStudent.Save();
+        Track newTrack = Track.Find(2);
+        newStudent.AddTrack(newTrack);
         NancyCookie newCookie = new NancyCookie("name", newStudent.GetUserName());
         NancyCookie idCookie = new NancyCookie("id", newStudent.GetId().ToString());
         NancyCookie adminCookie = new NancyCookie("bool", "false");
