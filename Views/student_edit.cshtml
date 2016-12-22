@@ -7,15 +7,15 @@
     <h3>Update info for @Model["student"].GetFirstName() @Model["student"].GetLastName():</h3>
     <form action='/student/updated/@Model["student"].GetId()' method="post">
       <div class="form-group">
-        <label for="first-name">First name:</label>
+        <label for="first-name">First Name:</label>
         <input class="form-control" type="text" name="first-name" value='@Model["student"].GetFirstName()' required>
       </div>
       <div class="form-group">
-        <label for="last-name">Last name:</label>
+        <label for="last-name">Last Name:</label>
         <input class="form-control" type="text" name="last-name" value='@Model["student"].GetLastName()' required>
       </div>
       <div class="form-group">
-        <label for="username">Desired username:</label>
+        <label for="username">Desired Username:</label>
         <input class="form-control" type="text" name="username" value='@Model["student"].GetUserName()' required>
       </div>
       <div class="form-group">
@@ -26,7 +26,10 @@
         <label for="email">Email:</label>
         <input class="form-control" type="text" name="email" value='@Model["student"].GetEmail()'required>
       </div>
-      <button type="submit" class="btn btn-info">Save</button>
+      <button type="submit" class="btn btn-custom" aria-label="Left Align">
+        <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+      </button>
+      <button type="button" class="btn btn-custom"><a href="/password/change/@Model["student"].GetId()">Change Password</a></button>
     </form>
 
     <a href="/main">Return to Home</a>
