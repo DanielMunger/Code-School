@@ -2,7 +2,7 @@
   Layout="Shared/_Layout.cshtml";
 }
 
-<h3>Here are our schools:</h3>
+<h3>Our Schools:</h3>
 @foreach (var school in Model)
 {
   <li><a href="/schools/@school.GetId()">@school.GetCity()</a></li>

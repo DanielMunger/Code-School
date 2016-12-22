@@ -2,10 +2,26 @@
   Layout="Shared/_Layout.cshtml";
 }
 
-<div class="container">
-  <h3>Students Enrolled in @Model["selectedTrack"].GetName()</h3>
-</div>
-@foreach(var student in Model["allStudents"])
+
+@if(Request.Cookies.ContainsKey("bool"))
 {
-  <li><a href="/student/details/@student.GetId()">@student.GetLastName(), @student.GetFirstName()</a></li>
+  @if(Request.Cookies["bool"] == "true")
+  {
+    <div class="container">
+      <h3>Students Enrolled in @Model["selectedTrack"].GetName()</h3>
+    </div>
+    @foreach(var student in Model["allStudents"])
+    {
+      <li><a href="/student/details/@student.GetId()">@student.GetLastName(), @student.GetFirstName()</a></li>
+    }
+  }
+  else{
+    <div class="container">
+      <h3>Students Enrolled in @Model["selectedTrack"].GetName()</h3>
+    </div>
+    @foreach(var student in Model["allStudents"])
+    {
+      <li>@student.GetLastName(), @student.GetFirstName()</li>
+    }
+  }
 }
