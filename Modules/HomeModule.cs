@@ -525,34 +525,59 @@ namespace Kickstart
         Dictionary<string, object> errorModel = new Dictionary<string, object>();
         errorModel.Add("student", selectedStudent);
         string username = Request.Form["username"];
-        foreach(Student student in allStudents)
+        if(selectedStudent.GetUserName() == username)
         {
-          if(student.GetUserName() == username )
+          Student.Update(Request.Form["first-name"], Request.Form["last-name"], username ,selectedStudent.GetPassword(), Request.Form["address"], Request.Form["email"], parameters.id);
+          Dictionary<string, object> model = new Dictionary<string, object>{};
+          Student foundStudent = Student.Find(parameters.id);
+          Track newTrack = foundStudent.GetTrack();
+          List<Track> allTracks = Track.GetAll();
+          List<Course> courses = foundStudent.GetCourses();
+          List<Grade> grades = new List<Grade> {};
+          foreach(Course course in courses)
           {
-            string error = "That UserName is Taken";
-            errorModel.Add("error", error);
-            return View["student_edit.cshtml", errorModel];
+            Grade newGrade = foundStudent.GetGrades(course.GetId());
+            grades.Add(newGrade);
           }
+          model.Add("student", foundStudent);
+          model.Add("track", newTrack);
+          model.Add("courses", courses);
+          model.Add("grades", grades);
+          model.Add("availtracks", allTracks);
+
+          return View["student_details.cshtml", model];
         }
-        Student.Update(Request.Form["first-name"], Request.Form["last-name"], username ,selectedStudent.GetPassword(), Request.Form["address"], Request.Form["email"], parameters.id);
-        Dictionary<string, object> model = new Dictionary<string, object>{};
-        Student foundStudent = Student.Find(parameters.id);
-        Track newTrack = foundStudent.GetTrack();
-        List<Track> allTracks = Track.GetAll();
-        List<Course> courses = foundStudent.GetCourses();
-        List<Grade> grades = new List<Grade> {};
-        foreach(Course course in courses)
-        {
-          Grade newGrade = foundStudent.GetGrades(course.GetId());
-          grades.Add(newGrade);
+        else{
+          foreach(Student student in allStudents)
+          {
+            if(student.GetUserName() == username && student.GetUserName() != selectedStudent.GetUserName())
+            {
+              string error = "That UserName is Taken";
+              errorModel.Add("error", error);
+              return View["student_edit.cshtml", errorModel];
+            }
+          }
+          Student.Update(Request.Form["first-name"], Request.Form["last-name"], username ,selectedStudent.GetPassword(), Request.Form["address"], Request.Form["email"], parameters.id);
+          Dictionary<string, object> model = new Dictionary<string, object>{};
+          Student foundStudent = Student.Find(parameters.id);
+          Track newTrack = foundStudent.GetTrack();
+          List<Track> allTracks = Track.GetAll();
+          List<Course> courses = foundStudent.GetCourses();
+          List<Grade> grades = new List<Grade> {};
+          foreach(Course course in courses)
+          {
+            Grade newGrade = foundStudent.GetGrades(course.GetId());
+            grades.Add(newGrade);
+          }
+          model.Add("student", foundStudent);
+          model.Add("track", newTrack);
+          model.Add("courses", courses);
+          model.Add("grades", grades);
+          model.Add("availtracks", allTracks);
+
+          return View["student_details.cshtml", model];
         }
-        model.Add("student", foundStudent);
-        model.Add("track", newTrack);
-        model.Add("courses", courses);
-        model.Add("grades", grades);
-        model.Add("availtracks", allTracks);
-      
-        return View["student_details.cshtml", model];
+
       };
 
       Post["/instructor/update/{id}"] = parameters =>
@@ -560,6 +585,37 @@ namespace Kickstart
         Instructor selectedInstructor = Instructor.Find(parameters.id);
         Instructor.Update(Request.Form["name"], Request.Form["username"], Request.Form["password"], Request.Form["address"], Request.Form["email"], parameters.id);
         return View["main.cshtml"];
+      };
+      Get["/password/change/{id}"] = parameters =>
+      {
+        Student selectedStudent = Student.Find(parameters.id);
+        Dictionary<string, object> model = new Dictionary<string, object>();
+        model.Add("student", selectedStudent);
+        model.Add("error", "");
+        return View["change_password.cshtml", model];
+      };
+      Post["/password/update/{id}"] = parameters =>
+      {
+        Student selectedStudent = Student.Find(parameters.id);
+        string goodhash = selectedStudent.GetPassword();
+        string newpassword = Request.Form["new-password"];
+        bool goodpassword = PasswordStorage.VerifyPassword(newpassword, goodhash);
+        if(goodpassword)
+        {
+          string newhash = PasswordStorage.CreateHash(newpassword);
+          Student.Update(selectedStudent.GetFirstName(), selectedStudent.GetLastName(), selectedStudent.GetUserName(), newhash, selectedStudent.GetAddress(), selectedStudent.GetEmail(), selectedStudent.GetId());
+          Student updatedStudent = Student.Find(selectedStudent.GetId());
+          Dictionary<string, object> model = new Dictionary<string, object>();
+          model.Add("error", "");
+          model.Add("student", updatedStudent);
+          return View["student_edit.cshtml", model];
+        } else
+        {
+          Dictionary<string, object> model = new Dictionary<string, object>();
+          model.Add("error", "Password not Valid");
+          model.Add("student", selectedStudent);
+          return View["change_password.cshtml", model];
+        }
       };
     }
   }
