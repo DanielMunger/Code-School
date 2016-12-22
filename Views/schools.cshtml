@@ -7,8 +7,11 @@
 {
   <li><a href="/schools/@school.GetId()">@school.GetCity()</a></li>
 }
-<br>
-<a href="/schools/add">Add New School location</a>
-<br>
-
+@if(Request.Cookies.ContainsKey("bool"))
+      {
+        @if(Request.Cookies["bool"] == "true")
+        {
+          <a href="/schools/add">Add New School location</a>
+        }
+      }
 <a href="/main">Return to Home</a>

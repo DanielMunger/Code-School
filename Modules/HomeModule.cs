@@ -11,17 +11,13 @@ namespace Kickstart
   public class HomeModule : NancyModule
   {
     public HomeModule()
-    {
+    { //Route for initial splash page
       Get["/"] = _ =>{
         return View["index.cshtml"];
       };
-      //Request.Cookies["test"]
       // Routes for Landing Page Navbar
       Get["/main"] = _ => {
         return View["main.cshtml"];
-      };
-      Get["/splash"] = _ =>{
-        return View["splash.cshtml"];
       };
       Get["/tracks"] = _ =>
       {
